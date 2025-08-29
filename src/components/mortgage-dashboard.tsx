@@ -136,15 +136,6 @@ export function MortgageDashboard() {
     }
   }
 
-  // Filter deals based on search term and status
-  const filteredDeals = dealsData.filter((deal) => {
-    const matchesSearch = deal.borrower.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         deal.id.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all-statuses" || 
-                         deal.status.toLowerCase() === statusFilter.toLowerCase()
-    return matchesSearch && matchesStatus
-  })
-
   const downloadSampleFile = () => {
     const sampleData = `Client_Name,Amount,Status,Date,Type,Assigned_To
 John Doe,450000,Pending,2024-01-15,Purchase,John Smith
