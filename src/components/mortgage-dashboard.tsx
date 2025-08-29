@@ -341,7 +341,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 px-2 sm:px-4 py-2 sm:py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary hover:text-primary transition-colors min-w-[80px] sm:min-w-[120px]"
+                    className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 px-2 sm:px-4 py-2 sm:py-3 rounded-none data-[state=active]:bg-muted/50 data-[state=active]:text-primary hover:text-primary transition-colors min-w-[80px] sm:min-w-[120px]"
                   >
                     <Icon className="h-4 w-4 shrink-0" />
                     <span className="text-xs sm:text-sm text-center truncate">{tab.label}</span>
