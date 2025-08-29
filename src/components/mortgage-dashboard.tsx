@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { DashboardCharts } from "@/components/dashboard-charts"
@@ -43,6 +44,8 @@ export function MortgageDashboard() {
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false)
   const [selectedDeal, setSelectedDeal] = useState<any>(null)
   const [lenderSearchTerm, setLenderSearchTerm] = useState("")
+  const [isLenderViewDialogOpen, setIsLenderViewDialogOpen] = useState(false)
+  const [selectedLender, setSelectedLender] = useState<any>(null)
 
   // Sample deals data
   const dealsData = [
@@ -143,13 +146,24 @@ export function MortgageDashboard() {
     {
       id: "L001",
       name: "First National Bank",
-      specialties: ["Commercial Real Estate", "SBA Loans"],
+      specialties: ["Commercial Real Estate", "SBA Loans", "Construction Loans"],
       averageRating: 4.5,
       averageRatingCount: 23,
       myRating: 5.0,
       timesUsed: 15,
       baseRate: "6.25%",
-      lastUsed: "12/8/2024"
+      lastUsed: "12/8/2024",
+      phone: "(555) 123-4567",
+      email: "lending@firstnational.com",
+      website: "https://firstnational.com",
+      currentBaseRate: "6.25%",
+      rateHistory: [
+        { month: "Aug", rate: 6.6 },
+        { month: "Sep", rate: 6.45 },
+        { month: "Oct", rate: 6.3 },
+        { month: "Dec", rate: 6.25 }
+      ],
+      notes: "Excellent service on commercial deals. Fast turnaround."
     },
     {
       id: "L002", 
@@ -160,7 +174,18 @@ export function MortgageDashboard() {
       myRating: 4.0,
       timesUsed: 22,
       baseRate: "5.95%",
-      lastUsed: "12/10/2024"
+      lastUsed: "12/10/2024",
+      phone: "(555) 234-5678",
+      email: "loans@communitycu.org",
+      website: "https://communitycu.org",
+      currentBaseRate: "5.95%",
+      rateHistory: [
+        { month: "Aug", rate: 6.4 },
+        { month: "Sep", rate: 6.2 },
+        { month: "Oct", rate: 6.0 },
+        { month: "Dec", rate: 5.95 }
+      ],
+      notes: "Great for first-time homebuyers. Very patient with clients."
     },
     {
       id: "L003",
@@ -171,7 +196,18 @@ export function MortgageDashboard() {
       myRating: 4.0,
       timesUsed: 8,
       baseRate: "6.50%",
-      lastUsed: "11/25/2024"
+      lastUsed: "11/25/2024",
+      phone: "(555) 345-6789",
+      email: "info@metromorgage.com",
+      website: "https://metromortgage.com",
+      currentBaseRate: "6.50%",
+      rateHistory: [
+        { month: "Aug", rate: 6.9 },
+        { month: "Sep", rate: 6.75 },
+        { month: "Oct", rate: 6.6 },
+        { month: "Dec", rate: 6.50 }
+      ],
+      notes: "Specializes in investment properties. Higher rates but reliable."
     },
     {
       id: "L004",
@@ -182,7 +218,18 @@ export function MortgageDashboard() {
       myRating: 3.0,
       timesUsed: 5,
       baseRate: "7.00%",
-      lastUsed: "12/5/2024"
+      lastUsed: "12/5/2024",
+      phone: "(555) 456-7890",
+      email: "construction@buildersbank.com",
+      website: "https://buildersbank.com",
+      currentBaseRate: "7.00%",
+      rateHistory: [
+        { month: "Aug", rate: 7.4 },
+        { month: "Sep", rate: 7.25 },
+        { month: "Oct", rate: 7.1 },
+        { month: "Dec", rate: 7.00 }
+      ],
+      notes: "Best for construction loans. Good relationship with contractors."
     },
     {
       id: "L005",
@@ -193,7 +240,18 @@ export function MortgageDashboard() {
       myRating: 5.0,
       timesUsed: 18,
       baseRate: "6.15%",
-      lastUsed: "12/7/2024"
+      lastUsed: "12/7/2024",
+      phone: "(555) 567-8901",
+      email: "private@regionaltrust.com", 
+      website: "https://regionaltrust.com",
+      currentBaseRate: "6.15%",
+      rateHistory: [
+        { month: "Aug", rate: 6.5 },
+        { month: "Sep", rate: 6.35 },
+        { month: "Oct", rate: 6.25 },
+        { month: "Dec", rate: 6.15 }
+      ],
+      notes: "Excellent for high net worth clients. Premium service."
     }
   ]
 
@@ -301,6 +359,11 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
   const handleViewDeal = (deal: any) => {
     setSelectedDeal(deal)
     setIsViewDialogOpen(true)
+  }
+
+  const handleViewLender = (lender: any) => {
+    setSelectedLender(lender)
+    setIsLenderViewDialogOpen(true)
   }
 
   const tabConfig = [
@@ -583,6 +646,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                                 variant="ghost" 
                                 size="sm" 
                                 className="text-muted-foreground hover:text-foreground"
+                                onClick={() => handleViewLender(lender)}
                               >
                                 <Eye className="h-4 w-4 mr-2" />
                                 View
@@ -604,7 +668,12 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                               <div className="font-medium text-foreground">{lender.name}</div>
                               <div className="text-sm text-muted-foreground">{lender.specialties.join(", ")}</div>
                             </div>
-                            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-muted-foreground hover:text-foreground"
+                              onClick={() => handleViewLender(lender)}
+                            >
                               <Eye className="h-4 w-4 mr-1" />
                               View
                             </Button>
@@ -980,6 +1049,161 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                             <div className="flex justify-between">
                               <span className="text-muted-foreground font-medium">Last Activity:</span>
                               <span className="font-semibold">{selectedDeal.lastActivity}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </DialogContent>
+              </Dialog>
+
+              {/* Lender Profile Dialog */}
+              <Dialog open={isLenderViewDialogOpen} onOpenChange={setIsLenderViewDialogOpen}>
+                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader className="pb-4 border-b">
+                    <DialogTitle className="text-xl font-semibold">
+                      Lender Profile - {selectedLender?.name}
+                    </DialogTitle>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Detailed information and rate history
+                    </p>
+                  </DialogHeader>
+                  
+                  {selectedLender && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+                      {/* Left Column - Contact & Details */}
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
+                          <div className="space-y-3">
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Phone:</span>
+                              <span className="font-semibold">{selectedLender.phone}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Email:</span>
+                              <span className="font-semibold">{selectedLender.email}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Website:</span>
+                              <span className="font-semibold text-primary underline">{selectedLender.website}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Specialties</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedLender.specialties?.map((specialty: string, index: number) => (
+                              <Badge 
+                                key={index} 
+                                variant="outline" 
+                                className="bg-muted/50 text-foreground border-border"
+                              >
+                                {specialty}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Usage Statistics</h3>
+                          <div className="space-y-3">
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Times Used:</span>
+                              <span className="font-semibold">{selectedLender.timesUsed}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Last Used:</span>
+                              <span className="font-semibold">{selectedLender.lastUsed}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Current Base Rate:</span>
+                              <span className="font-semibold">{selectedLender.currentBaseRate}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">My Notes</h3>
+                          <Textarea 
+                            value={selectedLender.notes}
+                            readOnly
+                            className="min-h-[100px] bg-muted/30 resize-none"
+                            placeholder="No notes available"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Right Column - Rate History Chart */}
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Rate History</h3>
+                          <div className="bg-muted/20 rounded-lg p-4 h-64 flex items-center justify-center">
+                            <div className="w-full h-full relative">
+                              {/* Simple SVG Chart */}
+                              <svg className="w-full h-full" viewBox="0 0 300 200">
+                                {/* Grid lines */}
+                                <defs>
+                                  <pattern id="grid" width="30" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 30 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.3"/>
+                                  </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)" />
+                                
+                                {/* Rate line */}
+                                <polyline
+                                  fill="none"
+                                  stroke="hsl(var(--primary))"
+                                  strokeWidth="2"
+                                  points={selectedLender.rateHistory?.map((point: any, index: number) => {
+                                    const x = 60 + (index * 60)
+                                    const y = 160 - ((point.rate - 5.5) * 40)
+                                    return `${x},${y}`
+                                  }).join(' ')}
+                                />
+                                
+                                {/* Data points */}
+                                {selectedLender.rateHistory?.map((point: any, index: number) => {
+                                  const x = 60 + (index * 60)
+                                  const y = 160 - ((point.rate - 5.5) * 40)
+                                  return (
+                                    <circle
+                                      key={index}
+                                      cx={x}
+                                      cy={y}
+                                      r="4"
+                                      fill="hsl(var(--primary))"
+                                    />
+                                  )
+                                })}
+                                
+                                {/* Month labels */}
+                                {selectedLender.rateHistory?.map((point: any, index: number) => {
+                                  const x = 60 + (index * 60)
+                                  return (
+                                    <text
+                                      key={index}
+                                      x={x}
+                                      y="190"
+                                      textAnchor="middle"
+                                      className="text-xs fill-muted-foreground"
+                                    >
+                                      {point.month}
+                                    </text>
+                                  )
+                                })}
+                                
+                                {/* Current rate label */}
+                                <text
+                                  x="240"
+                                  y="30"
+                                  className="text-sm fill-primary font-medium"
+                                >
+                                  Rate: {selectedLender.currentBaseRate}
+                                </text>
+                              </svg>
                             </div>
                           </div>
                         </div>
