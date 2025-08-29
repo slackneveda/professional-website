@@ -1140,70 +1140,159 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                       <div className="space-y-6">
                         <div>
                           <h3 className="text-lg font-semibold mb-4">Rate History</h3>
-                          <div className="bg-muted/20 rounded-lg p-4 h-64 flex items-center justify-center">
+                          <div className="bg-card border rounded-lg p-6 h-80">
                             <div className="w-full h-full relative">
-                              {/* Simple SVG Chart */}
-                              <svg className="w-full h-full" viewBox="0 0 300 200">
-                                {/* Grid lines */}
+                              {/* Chart Header */}
+                              <div className="mb-4 pb-2 border-b border-border">
+                                <div className="flex justify-between items-center">
+                                  <h4 className="text-sm font-medium text-muted-foreground">Interest Rate Trends</h4>
+                                  <div className="text-sm text-muted-foreground">
+                                    Current: <span className="text-primary font-semibold">{selectedLender.currentBaseRate}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* SVG Chart */}
+                              <svg className="w-full h-full" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+                                {/* Background grid */}
                                 <defs>
-                                  <pattern id="grid" width="30" height="20" patternUnits="userSpaceOnUse">
-                                    <path d="M 30 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.3"/>
+                                  <pattern id="chartGrid" width="40" height="24" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 24" fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" opacity="0.5"/>
                                   </pattern>
+                                  <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2"/>
+                                    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05"/>
+                                  </linearGradient>
                                 </defs>
-                                <rect width="100%" height="100%" fill="url(#grid)" />
                                 
-                                {/* Rate line */}
+                                {/* Chart area background */}
+                                <rect x="60" y="20" width="320" height="160" fill="url(#chartGrid)" />
+                                
+                                {/* Y-axis labels */}
+                                {[7.0, 6.5, 6.0, 5.5, 5.0].map((rate, index) => {
+                                  const y = 20 + (index * 40)
+                                  return (
+                                    <g key={rate}>
+                                      <text
+                                        x="55"
+                                        y={y + 5}
+                                        textAnchor="end"
+                                        className="text-xs fill-muted-foreground"
+                                      >
+                                        {rate.toFixed(1)}%
+                                      </text>
+                                      <line
+                                        x1="60"
+                                        y1={y}
+                                        x2="380"
+                                        y2={y}
+                                        stroke="hsl(var(--border))"
+                                        strokeWidth="0.5"
+                                        opacity="0.7"
+                                      />
+                                    </g>
+                                  )
+                                })}
+                                
+                                {/* Chart data area fill */}
+                                <polygon
+                                  fill="url(#chartGradient)"
+                                  points={`60,180 ${selectedLender.rateHistory?.map((point: any, index: number) => {
+                                    const x = 60 + (index * 80)
+                                    const y = 180 - ((point.rate - 5.0) * 32)
+                                    return `${x},${y}`
+                                  }).join(' ')} 380,180`}
+                                />
+                                
+                                {/* Main rate line */}
                                 <polyline
                                   fill="none"
                                   stroke="hsl(var(--primary))"
-                                  strokeWidth="2"
+                                  strokeWidth="3"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                   points={selectedLender.rateHistory?.map((point: any, index: number) => {
-                                    const x = 60 + (index * 60)
-                                    const y = 160 - ((point.rate - 5.5) * 40)
+                                    const x = 60 + (index * 80)
+                                    const y = 180 - ((point.rate - 5.0) * 32)
                                     return `${x},${y}`
                                   }).join(' ')}
                                 />
                                 
-                                {/* Data points */}
+                                {/* Data points with hover effect */}
                                 {selectedLender.rateHistory?.map((point: any, index: number) => {
-                                  const x = 60 + (index * 60)
-                                  const y = 160 - ((point.rate - 5.5) * 40)
+                                  const x = 60 + (index * 80)
+                                  const y = 180 - ((point.rate - 5.0) * 32)
                                   return (
-                                    <circle
-                                      key={index}
-                                      cx={x}
-                                      cy={y}
-                                      r="4"
-                                      fill="hsl(var(--primary))"
-                                    />
+                                    <g key={index}>
+                                      <circle
+                                        cx={x}
+                                        cy={y}
+                                        r="6"
+                                        fill="hsl(var(--background))"
+                                        stroke="hsl(var(--primary))"
+                                        strokeWidth="3"
+                                      />
+                                      <circle
+                                        cx={x}
+                                        cy={y}
+                                        r="3"
+                                        fill="hsl(var(--primary))"
+                                      />
+                                      
+                                      {/* Rate value labels */}
+                                      <text
+                                        x={x}
+                                        y={y - 12}
+                                        textAnchor="middle"
+                                        className="text-xs font-medium fill-foreground"
+                                      >
+                                        {point.rate}%
+                                      </text>
+                                    </g>
                                   )
                                 })}
                                 
+                                {/* X-axis */}
+                                <line x1="60" y1="180" x2="380" y2="180" stroke="hsl(var(--border))" strokeWidth="1"/>
+                                
                                 {/* Month labels */}
                                 {selectedLender.rateHistory?.map((point: any, index: number) => {
-                                  const x = 60 + (index * 60)
+                                  const x = 60 + (index * 80)
                                   return (
                                     <text
                                       key={index}
                                       x={x}
-                                      y="190"
+                                      y="200"
                                       textAnchor="middle"
-                                      className="text-xs fill-muted-foreground"
+                                      className="text-xs fill-muted-foreground font-medium"
                                     >
                                       {point.month}
                                     </text>
                                   )
                                 })}
                                 
-                                {/* Current rate label */}
+                                {/* Chart title */}
                                 <text
-                                  x="240"
-                                  y="30"
-                                  className="text-sm fill-primary font-medium"
+                                  x="220"
+                                  y="230"
+                                  textAnchor="middle"
+                                  className="text-xs fill-muted-foreground"
                                 >
-                                  Rate: {selectedLender.currentBaseRate}
+                                  Rate History (Last 4 Months)
                                 </text>
                               </svg>
+                            </div>
+                          </div>
+                          
+                          {/* Chart Legend */}
+                          <div className="flex items-center justify-center gap-6 mt-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-3 h-3 rounded-full bg-primary"></div>
+                              <span className="text-xs text-muted-foreground">Base Rate</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-3 h-0.5 bg-primary opacity-30"></div>
+                              <span className="text-xs text-muted-foreground">Trend Area</span>
                             </div>
                           </div>
                         </div>
