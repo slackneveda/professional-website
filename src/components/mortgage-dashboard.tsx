@@ -1265,6 +1265,74 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             </Card>
           </div>
         )
+      case "crm-integration":
+        return (
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">CRM Integration</h1>
+              <p className="text-muted-foreground text-base">Connect your CRM system or upload data via CSV to keep deal information synchronized</p>
+            </div>
+
+            {/* Connection Status Card */}
+            <Card className="bg-muted/30">
+              <CardContent className="p-6 space-y-6">
+                {/* Connection Status Header */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Gear className="h-5 w-5 text-muted-foreground" />
+                    <h2 className="text-lg font-semibold text-foreground">Connection Status</h2>
+                  </div>
+                  <p className="text-muted-foreground">Configure your CRM connection and sync settings</p>
+                </div>
+
+                {/* Not Connected Badge */}
+                <div className="flex items-center gap-2">
+                  <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100">
+                    Not Connected
+                  </Badge>
+                </div>
+
+                {/* Form Fields */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* CRM System */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">CRM System</label>
+                    <Select defaultValue="salesforce">
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select CRM system" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="salesforce">Salesforce</SelectItem>
+                        <SelectItem value="hubspot">HubSpot</SelectItem>
+                        <SelectItem value="pipedrive">Pipedrive</SelectItem>
+                        <SelectItem value="zoho">Zoho CRM</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* API Key */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">API Key</label>
+                    <Input 
+                      type="password"
+                      placeholder="Enter your API key"
+                      className="bg-background"
+                    />
+                  </div>
+                </div>
+
+                {/* Connect Button */}
+                <div className="flex justify-start">
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6">
+                    Connect to CRM
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )
       default:
         return null
     }
