@@ -40,16 +40,16 @@ export function MortgageDashboard() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold">Welcome back, John Smith</h2>
-                <p className="text-muted-foreground">Here's what's happening with your mortgage deals today.</p>
+                <h2 className="text-3xl font-bold">Welcome back, John Smith</h2>
+                <p className="text-muted-foreground mt-1">Here's what's happening with your mortgage deals today.</p>
               </div>
               <Select defaultValue="this-month">
                 <SelectTrigger className="w-40">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="this-week">This Week</SelectItem>
                   <SelectItem value="this-month">This Month</SelectItem>
-                  <SelectItem value="last-month">Last Month</SelectItem>
                   <SelectItem value="this-quarter">This Quarter</SelectItem>
                   <SelectItem value="this-year">This Year</SelectItem>
                 </SelectContent>

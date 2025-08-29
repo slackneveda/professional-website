@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, TrendingDown, DollarSign, FileText, Calendar, Activity } from "@phosphor-icons/react"
+import { TrendingUp, TrendingDown, DollarSign, ChartLine, Star, Calendar } from "@phosphor-icons/react"
 
 interface MetricCardProps {
   title: string
@@ -53,13 +53,13 @@ export function DashboardMetrics() {
         title="Active Deals"
         value="4"
         subtitle="2 pending review"
-        icon={<Activity className="h-4 w-4" />}
+        icon={<ChartLine className="h-4 w-4" />}
       />
       <MetricCard
         title="Avg Interest Rate"
         value="6.27%"
         subtitle="Competitive market rate"
-        icon={<TrendingUp className="h-4 w-4" />}
+        icon={<Star className="h-4 w-4" />}
       />
       <MetricCard
         title="Deals Closed"

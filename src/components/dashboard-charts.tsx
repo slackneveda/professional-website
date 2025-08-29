@@ -1,20 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 
 const loanVolumeData = [
-  { month: "Jan", volume: 180000 },
-  { month: "Feb", volume: 240000 },
-  { month: "Mar", volume: 280000 },
-  { month: "Apr", volume: 320000 },
-  { month: "May", volume: 290000 },
-  { month: "Jun", volume: 350000 },
+  { month: "Sep", volume: 1000000 },
+  { month: "Oct", volume: 800000 },
+  { month: "Nov", volume: 2900000 },
+  { month: "Dec", volume: 2600000 },
 ]
 
 const dealStatusData = [
-  { name: "Approved", value: 35, color: "#22c55e" },
-  { name: "Pending", value: 25, color: "#f59e0b" },
-  { name: "Review", value: 20, color: "#3b82f6" },
-  { name: "Rejected", value: 10, color: "#ef4444" },
+  { name: "Closed", value: 1 },
+  { name: "Submitted", value: 1 },
+  { name: "Approved", value: 1 },
 ]
 
 export function DashboardCharts() {
@@ -39,9 +36,9 @@ export function DashboardCharts() {
                 className="text-xs fill-muted-foreground"
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={(value) => `$${value/1000}K`}
+                tickFormatter={(value) => `${value/1000000}M`}
               />
-              <Bar dataKey="volume" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="volume" fill="#3b82f6" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -54,35 +51,27 @@ export function DashboardCharts() {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={dealStatusData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={2}
-                dataKey="value"
-              >
-                {dealStatusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
+            <BarChart data={dealStatusData} layout="horizontal">
+              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <XAxis 
+                type="number"
+                className="text-xs fill-muted-foreground"
+                axisLine={false}
+                tickLine={false}
+                domain={[0, 1]}
+                ticks={[0, 0.25, 0.5, 0.75, 1]}
+                tickFormatter={(value) => value.toString()}
+              />
+              <YAxis 
+                type="category"
+                dataKey="name" 
+                className="text-xs fill-muted-foreground"
+                axisLine={false}
+                tickLine={false}
+              />
+              <Bar dataKey="value" fill="#10b981" radius={[0, 4, 4, 0]} />
+            </BarChart>
           </ResponsiveContainer>
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            {dealStatusData.map((item) => (
-              <div key={item.name} className="flex items-center space-x-2">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: item.color }}
-                />
-                <span className="text-sm text-muted-foreground">
-                  {item.name}: {item.value}%
-                </span>
-              </div>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>
