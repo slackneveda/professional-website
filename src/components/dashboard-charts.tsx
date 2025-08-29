@@ -9,9 +9,11 @@ const loanVolumeData = [
 ]
 
 const dealStatusData = [
-  { name: "Closed", value: 1 },
-  { name: "Submitted", value: 1 },
-  { name: "Approved", value: 1 },
+  { name: "Closed", value: 24 },
+  { name: "Approved", value: 18 },
+  { name: "Submitted", value: 32 },
+  { name: "Under Review", value: 15 },
+  { name: "Pending", value: 12 },
 ]
 
 export function DashboardCharts() {
@@ -38,7 +40,7 @@ export function DashboardCharts() {
                 tickLine={false}
                 tickFormatter={(value) => `${value/1000000}M`}
               />
-              <Bar dataKey="volume" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="volume" className="fill-primary" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -58,9 +60,6 @@ export function DashboardCharts() {
                 className="text-xs fill-muted-foreground"
                 axisLine={false}
                 tickLine={false}
-                domain={[0, 1]}
-                ticks={[0, 0.25, 0.5, 0.75, 1]}
-                tickFormatter={(value) => value.toString()}
               />
               <YAxis 
                 type="category"
@@ -69,7 +68,7 @@ export function DashboardCharts() {
                 axisLine={false}
                 tickLine={false}
               />
-              <Bar dataKey="value" fill="#10b981" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="value" className="fill-accent" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
