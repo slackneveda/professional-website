@@ -1275,31 +1275,31 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             </div>
 
             {/* Connection Status Card */}
-            <Card className="bg-muted/30">
-              <CardContent className="p-6 space-y-6">
+            <Card className="bg-blue-50/50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
+              <CardContent className="p-8 space-y-6">
                 {/* Connection Status Header */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Gear className="h-5 w-5 text-muted-foreground" />
-                    <h2 className="text-lg font-semibold text-foreground">Connection Status</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Gear className="h-5 w-5 text-foreground" />
+                    <h2 className="text-xl font-semibold text-foreground">Connection Status</h2>
                   </div>
                   <p className="text-muted-foreground">Configure your CRM connection and sync settings</p>
                 </div>
 
                 {/* Not Connected Badge */}
-                <div className="flex items-center gap-2">
-                  <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100">
+                <div className="flex items-start">
+                  <Badge className="bg-red-100 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800 px-3 py-1">
                     Not Connected
                   </Badge>
                 </div>
 
                 {/* Form Fields */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* CRM System */}
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <label className="text-sm font-medium text-foreground">CRM System</label>
                     <Select defaultValue="salesforce">
-                      <SelectTrigger className="bg-background">
+                      <SelectTrigger className="bg-background h-12 text-base">
                         <SelectValue placeholder="Select CRM system" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1313,19 +1313,19 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   </div>
 
                   {/* API Key */}
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <label className="text-sm font-medium text-foreground">API Key</label>
                     <Input 
                       type="password"
                       placeholder="Enter your API key"
-                      className="bg-background"
+                      className="bg-background h-12 text-base placeholder:text-muted-foreground/60"
                     />
                   </div>
                 </div>
 
                 {/* Connect Button */}
-                <div className="flex justify-start">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6">
+                <div className="flex justify-start pt-2">
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 h-auto text-base font-medium rounded-lg">
                     Connect to CRM
                   </Button>
                 </div>
