@@ -11,6 +11,16 @@
   }
 }
 
+/* Custom responsive breakpoint for extra small screens */
+@screen xs {
+  .xs\:inline {
+    display: inline;
+  }
+  .xs\:hidden {
+    display: none;
+  }
+}
+
 :root {
   --background: oklch(0.98 0 0);
   --foreground: oklch(0.15 0 0);

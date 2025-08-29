@@ -13,26 +13,26 @@ export function MetricCard({ title, value, subtitle, trend, icon }: MetricCardPr
   return (
     <Card className="relative overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground truncate pr-2">
           {title}
         </CardTitle>
-        <div className="text-muted-foreground">
+        <div className="text-muted-foreground shrink-0">
           {icon}
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+        <div className="text-xl sm:text-2xl font-bold">{value}</div>
+        <div className="flex items-center space-x-1 text-xs text-muted-foreground mt-1">
           {trend && (
             <>
               {trend === "up" ? (
-                <TrendingUp className="h-3 w-3 text-green-500" />
+                <TrendingUp className="h-3 w-3 text-green-500 shrink-0" />
               ) : (
-                <TrendingDown className="h-3 w-3 text-red-500" />
+                <TrendingDown className="h-3 w-3 text-red-500 shrink-0" />
               )}
             </>
           )}
-          <span>{subtitle}</span>
+          <span className="truncate">{subtitle}</span>
         </div>
       </CardContent>
     </Card>
@@ -41,7 +41,7 @@ export function MetricCard({ title, value, subtitle, trend, icon }: MetricCardPr
 
 export function DashboardMetrics() {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title="Total Loan Volume"
         value="$2.7M"
