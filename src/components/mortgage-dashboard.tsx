@@ -919,6 +919,160 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Training Resources */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6 space-y-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-background rounded-lg">
+                        <User className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">Training Resources</h3>
+                        <p className="text-sm text-muted-foreground">Training materials, certifications, and learning paths</p>
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">15 items</Badge>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground">
+                    Last updated: 12/5/2024
+                  </div>
+
+                  {/* Recent Documents */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>New Broker Onboarding</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Mortgage Fundamentals Course</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Underwriting Guidelines</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Credit Analysis Training</span>
+                      </div>
+                      <div className="text-sm text-primary cursor-pointer hover:underline">
+                        +11 more documents
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="pt-4 space-y-2">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      <ArrowSquareOut className="h-4 w-4 mr-2" />
+                      Open in SharePoint
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full">
+                      <DownloadSimple className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Operations Manual */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6 space-y-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-background rounded-lg">
+                        <Gear className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">Operations Manual</h3>
+                        <p className="text-sm text-muted-foreground">Standard operating procedures and workflows</p>
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">22 items</Badge>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground">
+                    Last updated: 12/3/2024
+                  </div>
+
+                  {/* Recent Documents */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Loan Processing Checklist</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Application Intake Procedures</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Document Collection Guidelines</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Client Onboarding Workflow</span>
+                      </div>
+                      <div className="text-sm text-primary cursor-pointer hover:underline">
+                        +18 more documents
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="pt-4 space-y-2">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      <ArrowSquareOut className="h-4 w-4 mr-2" />
+                      Open in SharePoint
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full">
+                      <DownloadSimple className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Quick Access Section */}
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-lg font-semibold text-foreground">Quick Access</h2>
+                <p className="text-sm text-muted-foreground">Frequently accessed documents and resources</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Current Rate Sheets */}
+                <Card className="bg-background border border-border">
+                  <CardContent className="p-4">
+                    <h3 className="font-medium text-foreground mb-1">Current Rate Sheets</h3>
+                    <p className="text-sm text-muted-foreground">Updated daily</p>
+                  </CardContent>
+                </Card>
+
+                {/* Underwriting Guidelines */}
+                <Card className="bg-background border border-border">
+                  <CardContent className="p-4">
+                    <h3 className="font-medium text-foreground mb-1">Underwriting Guidelines</h3>
+                    <p className="text-sm text-muted-foreground">All lender requirements</p>
+                  </CardContent>
+                </Card>
+
+                {/* Forms Library */}
+                <Card className="bg-background border border-border">
+                  <CardContent className="p-4">
+                    <h3 className="font-medium text-foreground mb-1">Forms Library</h3>
+                    <p className="text-sm text-muted-foreground">Printable client forms</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         )
