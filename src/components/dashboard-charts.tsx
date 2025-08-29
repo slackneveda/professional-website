@@ -53,22 +53,20 @@ export function DashboardCharts() {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={dealStatusData} layout="horizontal">
+            <BarChart data={dealStatusData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis 
-                type="number"
+                dataKey="name"
                 className="text-xs fill-muted-foreground"
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis 
-                type="category"
-                dataKey="name" 
                 className="text-xs fill-muted-foreground"
                 axisLine={false}
                 tickLine={false}
               />
-              <Bar dataKey="value" className="fill-accent" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="value" className="fill-accent" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
