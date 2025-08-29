@@ -626,16 +626,8 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
               {/* Deal Details Dialog */}
               <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
                 <DialogContent className="w-[95vw] max-w-4xl max-h-[85vh] overflow-y-auto sm:w-[90vw] md:w-[80vw] lg:max-w-4xl">
-                  <DialogHeader className="pb-4 border-b relative">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-0 top-0 h-8 w-8 rounded-full hover:bg-muted"
-                      onClick={() => setIsViewDialogOpen(false)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                    <DialogTitle className="text-xl font-semibold pr-10">
+                  <DialogHeader className="pb-4 border-b">
+                    <DialogTitle className="text-xl font-semibold">
                       Deal Details - {selectedDeal?.id}
                     </DialogTitle>
                     <p className="text-base text-primary font-medium mt-1">
