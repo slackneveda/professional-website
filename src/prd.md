@@ -43,6 +43,16 @@
 - **Purpose**: Enable quick pattern recognition and trend analysis
 - **Success Criteria**: Charts render correctly and provide meaningful insights
 
+### Recent Deals Section
+- **Functionality**: Display latest deal updates with client names, loan amounts, lenders, and current status
+- **Purpose**: Provide quick visibility into active pipeline and deal progression
+- **Success Criteria**: Real-time status updates with clear visual status indicators
+
+### Alerts & Notifications
+- **Functionality**: Important updates requiring broker attention including documentation requirements, closing reminders, and rate updates
+- **Purpose**: Ensure critical tasks and deadlines are not missed
+- **Success Criteria**: Clear categorization of alert types with appropriate visual priority
+
 ### Theme Switching
 - **Functionality**: Toggle between light and dark modes
 - **Purpose**: Accommodate user preferences and different viewing environments
@@ -102,11 +112,13 @@
 
 ### UI Elements & Component Selection
 **Component Usage**: 
-- Cards for metric display and chart containers
+- Cards for metric display, chart containers, recent deals, and notifications
 - Select dropdown for time period filtering
 - Tabs for navigation
 - Button for theme toggle
 - Avatar for user identity
+- Badges for deal status indicators
+- Icons for notification types and visual hierarchy
 
 **Component Customization**: Professional color scheme applied to all shadcn components
 **Component States**: Clear hover, active, and focus states for all interactive elements

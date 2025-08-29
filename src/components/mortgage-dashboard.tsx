@@ -8,6 +8,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { DashboardCharts } from "@/components/dashboard-charts"
+import { RecentDeals } from "@/components/recent-deals"
+import { AlertsNotifications } from "@/components/alerts-notifications"
 import {
   TrendingUp,
   House,
@@ -57,6 +59,10 @@ export function MortgageDashboard() {
             </div>
             <DashboardMetrics />
             <DashboardCharts />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <RecentDeals />
+              <AlertsNotifications />
+            </div>
           </div>
         )
       case "deals":
