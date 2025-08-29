@@ -26,7 +26,8 @@ import {
   Warning,
   DownloadSimple,
   MagnifyingGlass,
-  Eye
+  Eye,
+  X
 } from "@phosphor-icons/react"
 
 export function MortgageDashboard() {
@@ -36,6 +37,8 @@ export function MortgageDashboard() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all-statuses")
   const [lenderFilter, setLenderFilter] = useState("all-lenders")
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState(false)
+  const [selectedDeal, setSelectedDeal] = useState<any>(null)
 
   // Sample deals data
   const dealsData = [
@@ -46,7 +49,16 @@ export function MortgageDashboard() {
       lender: "First National Bank", 
       status: "Underwriting",
       closeDate: "1/15/2025",
-      rate: "6.75%"
+      rate: "6.75%",
+      loanType: "purchase",
+      created: "12/1/2024",
+      submitted: "12/5/2024",
+      lastActivity: "12/10/2024",
+      documents: ["Application", "Income Verification", "Appraisal Pending"],
+      notes: [
+        "Excellent credit score",
+        "Self-employed borrower - extra documentation needed"
+      ]
     },
     {
       id: "D002", 
@@ -55,7 +67,16 @@ export function MortgageDashboard() {
       lender: "Community Credit Union",
       status: "Approved",
       closeDate: "12/20/2024", 
-      rate: "7.25%"
+      rate: "7.25%",
+      loanType: "commercial",
+      created: "11/15/2024",
+      submitted: "11/20/2024",
+      lastActivity: "12/1/2024",
+      documents: ["Application", "Income Verification", "Appraisal Complete"],
+      notes: [
+        "Commercial property loan",
+        "Strong financials"
+      ]
     },
     {
       id: "D003",
@@ -64,7 +85,16 @@ export function MortgageDashboard() {
       lender: "Metro Mortgage Solutions",
       status: "Closed",
       closeDate: "11/30/2024",
-      rate: "6.5%"
+      rate: "6.5%",
+      loanType: "refinance",
+      created: "10/1/2024",
+      submitted: "10/5/2024",
+      lastActivity: "11/30/2024",
+      documents: ["Application", "Income Verification", "Appraisal Complete"],
+      notes: [
+        "Refinance to lower rate",
+        "Fast approval process"
+      ]
     },
     {
       id: "D004",
@@ -73,7 +103,16 @@ export function MortgageDashboard() {
       lender: "Builder's Bank",
       status: "Submitted",
       closeDate: "2/1/2025",
-      rate: "8%"
+      rate: "8%",
+      loanType: "construction",
+      created: "11/1/2024",
+      submitted: "11/15/2024",
+      lastActivity: "12/5/2024",
+      documents: ["Application", "Income Verification", "Plans Review"],
+      notes: [
+        "Construction loan for new development",
+        "Higher rate due to risk"
+      ]
     },
     {
       id: "D005",
@@ -82,7 +121,16 @@ export function MortgageDashboard() {
       lender: "First National Bank",
       status: "Denied",
       closeDate: "N/A",
-      rate: "N/A"
+      rate: "N/A",
+      loanType: "purchase",
+      created: "10/15/2024",
+      submitted: "10/20/2024",
+      lastActivity: "11/5/2024",
+      documents: ["Application", "Income Verification"],
+      notes: [
+        "Insufficient income verification",
+        "Credit score below threshold"
+      ]
     }
   ]
 
@@ -154,6 +202,11 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
     a.click()
     document.body.removeChild(a)
     window.URL.revokeObjectURL(url)
+  }
+
+  const handleViewDeal = (deal: any) => {
+    setSelectedDeal(deal)
+    setIsViewDialogOpen(true)
   }
 
   const tabConfig = [
@@ -308,7 +361,12 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                             <td className="py-4 px-4">{deal.closeDate}</td>
                             <td className="py-4 px-4 font-medium">{deal.rate}</td>
                             <td className="py-4 px-4">
-                              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="text-muted-foreground hover:text-foreground"
+                                onClick={() => handleViewDeal(deal)}
+                              >
                                 <Eye className="h-4 w-4 mr-2" />
                                 View
                               </Button>
@@ -343,7 +401,12 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                             </div>
                           </div>
                           <div className="pt-2 border-t">
-                            <Button variant="outline" size="sm" className="w-full">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="w-full"
+                              onClick={() => handleViewDeal(deal)}
+                            >
                               <Eye className="h-4 w-4 mr-2" />
                               View Deal
                             </Button>
@@ -557,6 +620,109 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                       </div>
                     </div>
                   </div>
+                </DialogContent>
+              </Dialog>
+              
+              {/* Deal Details Dialog */}
+              <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
+                <DialogContent className="w-[95vw] max-w-4xl max-h-[85vh] overflow-y-auto sm:w-[90vw] md:w-[80vw] lg:max-w-4xl">
+                  <DialogHeader className="pb-4 border-b relative">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-0 top-0 h-8 w-8 rounded-full hover:bg-muted"
+                      onClick={() => setIsViewDialogOpen(false)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                    <DialogTitle className="text-xl font-semibold pr-10">
+                      Deal Details - {selectedDeal?.id}
+                    </DialogTitle>
+                    <p className="text-base text-primary font-medium mt-1">
+                      {selectedDeal?.borrower}
+                    </p>
+                  </DialogHeader>
+                  
+                  {selectedDeal && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+                      {/* Left Column - Loan Information */}
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Loan Information</h3>
+                          <div className="space-y-3">
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Amount:</span>
+                              <span className="font-semibold">{selectedDeal.loanAmount}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Rate:</span>
+                              <span className="font-semibold">{selectedDeal.rate}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Type:</span>
+                              <span className="font-semibold capitalize">{selectedDeal.loanType}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Lender:</span>
+                              <span className="font-semibold">{selectedDeal.lender}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Documents</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedDeal.documents?.map((doc: string, index: number) => (
+                              <Badge 
+                                key={index} 
+                                variant="outline" 
+                                className="bg-muted/50 text-foreground border-border"
+                              >
+                                {doc}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Notes</h3>
+                          <div className="space-y-2">
+                            {selectedDeal.notes?.map((note: string, index: number) => (
+                              <div key={index} className="flex items-start gap-2">
+                                <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full mt-2 shrink-0"></div>
+                                <span className="text-muted-foreground">{note}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Right Column - Timeline */}
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">Timeline</h3>
+                          <div className="space-y-3">
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Created:</span>
+                              <span className="font-semibold">{selectedDeal.created}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Submitted:</span>
+                              <span className="font-semibold">{selectedDeal.submitted}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Close Date:</span>
+                              <span className="font-semibold">{selectedDeal.closeDate}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground font-medium">Last Activity:</span>
+                              <span className="font-semibold">{selectedDeal.lastActivity}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </DialogContent>
               </Dialog>
             </div>
