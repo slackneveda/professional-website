@@ -101,15 +101,15 @@ export function MortgageDashboard() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "Underwriting":
-        return <Badge className="bg-yellow-200 text-yellow-900 hover:bg-yellow-200 border-yellow-300 dark:bg-yellow-500/20 dark:text-yellow-300 dark:border-yellow-600 font-medium">{status}</Badge>
+        return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-yellow-300 dark:bg-yellow-500/20 dark:text-yellow-300 dark:border-yellow-600 font-medium">{status}</Badge>
       case "Approved":
-        return <Badge className="bg-blue-200 text-blue-900 hover:bg-blue-200 border-blue-300 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-600 font-medium">{status}</Badge>
+        return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 border-blue-300 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-600 font-medium">{status}</Badge>
       case "Closed":
-        return <Badge className="bg-green-200 text-green-900 hover:bg-green-200 border-green-300 dark:bg-green-500/20 dark:text-green-300 dark:border-green-600 font-medium">{status}</Badge>
+        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-green-300 dark:bg-green-500/20 dark:text-green-300 dark:border-green-600 font-medium">{status}</Badge>
       case "Submitted":
-        return <Badge className="bg-gray-200 text-gray-900 hover:bg-gray-200 border-gray-300 dark:bg-gray-500/20 dark:text-gray-300 dark:border-gray-600 font-medium">{status}</Badge>
+        return <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100 border-gray-300 dark:bg-gray-500/20 dark:text-gray-300 dark:border-gray-600 font-medium">{status}</Badge>
       case "Denied":
-        return <Badge className="bg-red-200 text-red-900 hover:bg-red-200 border-red-300 dark:bg-red-500/20 dark:text-red-300 dark:border-red-600 font-medium">{status}</Badge>
+        return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 border-red-300 dark:bg-red-500/20 dark:text-red-300 dark:border-red-600 font-medium">{status}</Badge>
       default:
         return <Badge variant="secondary">{status}</Badge>
     }
