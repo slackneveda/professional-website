@@ -35,7 +35,10 @@ import {
   CaretRight,
   ArrowSquareOut,
   File,
-  ChartLine
+  ChartLine,
+  ChatCircleDots,
+  ArrowUp,
+  ArrowClockwise
 } from "@phosphor-icons/react"
 
 export function MortgageDashboard() {
@@ -48,6 +51,8 @@ export function MortgageDashboard() {
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false)
   const [selectedDeal, setSelectedDeal] = useState<any>(null)
   const [lenderSearchTerm, setLenderSearchTerm] = useState("")
+  const [chatMessages, setChatMessages] = useState<Array<{id: string, text: string, sender: 'user' | 'assistant', timestamp: Date}>>([])
+  const [chatInput, setChatInput] = useState("")
   const [isLenderViewDialogOpen, setIsLenderViewDialogOpen] = useState(false)
   const [selectedLender, setSelectedLender] = useState<any>(null)
 
@@ -1079,10 +1084,161 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       case "assistant":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">AI Assistant</h2>
-            <Card>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground">AI assistant interface will be implemented here.</p>
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-2">
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Mortgage Assistant</h1>
+                <p className="text-muted-foreground text-base">Ask questions about mortgage products, guidelines, and lending requirements</p>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <ArrowClockwise className="h-4 w-4" />
+                  Refresh
+                </Button>
+                <Button variant="outline" size="sm">
+                  Clear Chat
+                </Button>
+              </div>
+            </div>
+
+            {/* Chat Interface */}
+            <Card className="h-[600px] flex flex-col">
+              <CardContent className="p-0 flex flex-col h-full">
+                {/* Chat Header */}
+                <div className="p-4 border-b bg-muted/10">
+                  <h3 className="text-lg font-semibold text-foreground">Chat</h3>
+                </div>
+
+                {/* Chat Messages Area */}
+                <div className="flex-1 p-6 overflow-y-auto">
+                  {chatMessages.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full space-y-6 text-center">
+                      {/* Chat Icon */}
+                      <div className="p-4 bg-muted/20 rounded-full">
+                        <ChatCircleDots className="h-12 w-12 text-muted-foreground" />
+                      </div>
+                      
+                      {/* Welcome Message */}
+                      <div className="space-y-3 max-w-2xl">
+                        <h3 className="text-xl font-semibold text-muted-foreground">Welcome to the Mortgage Assistant!</h3>
+                        <p className="text-muted-foreground">
+                          Ask me about FHA, VA, USDA, conventional loans, down payment assistance programs, or any mortgage-related questions based on your company's documentation.
+                        </p>
+                      </div>
+
+                      {/* Suggested Questions */}
+                      <div className="space-y-3 max-w-2xl">
+                        <p className="text-sm font-medium text-muted-foreground">Try asking:</p>
+                        <div className="space-y-2">
+                          <div className="text-sm text-primary/80 bg-primary/5 px-3 py-2 rounded-lg border border-primary/20">
+                            "What FHA loan programs are available?"
+                          </div>
+                          <div className="text-sm text-primary/80 bg-primary/5 px-3 py-2 rounded-lg border border-primary/20">
+                            "What are the VA loan requirements?"
+                          </div>
+                          <div className="text-sm text-primary/80 bg-primary/5 px-3 py-2 rounded-lg border border-primary/20">
+                            "Tell me about down payment assistance programs"
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {chatMessages.map((message) => (
+                        <div
+                          key={message.id}
+                          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        >
+                          <div
+                            className={`max-w-[80%] p-3 rounded-lg ${
+                              message.sender === 'user'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted text-muted-foreground'
+                            }`}
+                          >
+                            <p className="text-sm">{message.text}</p>
+                            <div className="text-xs opacity-70 mt-1">
+                              {message.timestamp.toLocaleTimeString()}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Chat Input */}
+                <div className="border-t p-4">
+                  <div className="flex gap-2">
+                    <div className="flex-1 relative">
+                      <Input
+                        placeholder="Ask about mortgage products, guidelines, or requirements..."
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault()
+                            if (chatInput.trim()) {
+                              const newMessage = {
+                                id: Date.now().toString(),
+                                text: chatInput.trim(),
+                                sender: 'user' as const,
+                                timestamp: new Date()
+                              }
+                              setChatMessages(prev => [...prev, newMessage])
+                              setChatInput("")
+                              
+                              // Simulate assistant response
+                              setTimeout(() => {
+                                const assistantMessage = {
+                                  id: (Date.now() + 1).toString(),
+                                  text: "Thank you for your question. I'm here to help with mortgage-related inquiries. Please note that this is a demo interface and responses would be generated based on your company's documentation.",
+                                  sender: 'assistant' as const,
+                                  timestamp: new Date()
+                                }
+                                setChatMessages(prev => [...prev, assistantMessage])
+                              }, 1000)
+                            }
+                          }
+                        }}
+                        className="pr-12"
+                      />
+                    </div>
+                    <Button 
+                      size="sm" 
+                      className="px-3"
+                      disabled={!chatInput.trim()}
+                      onClick={() => {
+                        if (chatInput.trim()) {
+                          const newMessage = {
+                            id: Date.now().toString(),
+                            text: chatInput.trim(),
+                            sender: 'user' as const,
+                            timestamp: new Date()
+                          }
+                          setChatMessages(prev => [...prev, newMessage])
+                          setChatInput("")
+                          
+                          // Simulate assistant response
+                          setTimeout(() => {
+                            const assistantMessage = {
+                              id: (Date.now() + 1).toString(),
+                              text: "Thank you for your question. I'm here to help with mortgage-related inquiries. Please note that this is a demo interface and responses would be generated based on your company's documentation.",
+                              sender: 'assistant' as const,
+                              timestamp: new Date()
+                            }
+                            setChatMessages(prev => [...prev, assistantMessage])
+                          }, 1000)
+                        }
+                      }}
+                    >
+                      <ArrowUp className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-2">
+                    Press Enter to send, Shift+Enter for new line
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
