@@ -32,7 +32,10 @@ import {
   X,
   Star,
   CaretLeft,
-  CaretRight
+  CaretRight,
+  ArrowSquareOut,
+  File,
+  ChartLine
 } from "@phosphor-icons/react"
 
 export function MortgageDashboard() {
@@ -775,12 +778,148 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       case "company-docs":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">Company Documents</h2>
-            <Card>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground">Document management system will be implemented here.</p>
-              </CardContent>
-            </Card>
+            {/* Header */}
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Company Documents</h1>
+              <p className="text-muted-foreground text-base">Access policies, marketing materials, training resources, and operational procedures</p>
+            </div>
+
+            {/* Search and Stats */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="text-sm text-muted-foreground">
+                67 total documents across 4 categories
+              </div>
+              <div className="relative w-full sm:w-96">
+                <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search documents and categories..."
+                  className="pl-10"
+                />
+              </div>
+            </div>
+
+            {/* Document Categories Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Company Policies */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6 space-y-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-background rounded-lg">
+                        <File className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">Company Policies</h3>
+                        <p className="text-sm text-muted-foreground">HR policies, compliance guidelines, and procedures</p>
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">12 items</Badge>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground">
+                    Last updated: 12/1/2024
+                  </div>
+
+                  {/* Recent Documents */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Employee Handbook</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Code of Conduct</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Privacy Policy</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>GDPR Compliance Guidelines</span>
+                      </div>
+                      <div className="text-sm text-primary cursor-pointer hover:underline">
+                        +8 more documents
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="pt-4 space-y-2">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      <ArrowSquareOut className="h-4 w-4 mr-2" />
+                      Open in SharePoint
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full">
+                      <DownloadSimple className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Marketing Materials */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6 space-y-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-background rounded-lg">
+                        <ChartLine className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">Marketing Materials</h3>
+                        <p className="text-sm text-muted-foreground">Brochures, presentations, and promotional content</p>
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">18 items</Badge>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground">
+                    Last updated: 11/28/2024
+                  </div>
+
+                  {/* Recent Documents */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Mortgage Product Brochures</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Rate Sheets (Current)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Client Presentation Templates</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                        <File className="h-4 w-4" />
+                        <span>Brand Guidelines</span>
+                      </div>
+                      <div className="text-sm text-primary cursor-pointer hover:underline">
+                        +14 more documents
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="pt-4 space-y-2">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      <ArrowSquareOut className="h-4 w-4 mr-2" />
+                      Open in SharePoint
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full">
+                      <DownloadSimple className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         )
       case "assistant":
