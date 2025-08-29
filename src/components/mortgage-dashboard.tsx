@@ -535,52 +535,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
               </div>
             </div>
 
-            {/* Lender Insights Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Top Rated Lender */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Top Rated Lender</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center">
-                        {[1, 2, 3, 4].map((star) => (
-                          <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        ))}
-                        <Star className="h-4 w-4 text-gray-300" />
-                      </div>
-                      <span className="font-medium text-foreground">4.8</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">Based on 31 reviews</p>
-                  </div>
-                </CardContent>
-              </Card>
 
-              {/* Most Used Lender */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Most Used Lender</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
-                    <p className="text-sm text-muted-foreground">Used 22 times</p>
-                    <p className="text-sm text-muted-foreground">Last used: 12/10/2024</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Best Rate Available */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Best Rate Available</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
-                    <p className="text-2xl font-bold text-green-600">5.95%</p>
-                    <p className="text-sm text-muted-foreground">Base rate for qualified borrowers</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
 
             {/* Lenders Table Section */}
             <Card className="bg-muted/30">
@@ -698,6 +653,53 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                 </div>
               </CardContent>
             </Card>
+
+            {/* Lender Insights Cards - Bottom Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Top Rated Lender */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Top Rated Lender</h3>
+                  <div className="space-y-3">
+                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center">
+                        {[1, 2, 3, 4].map((star) => (
+                          <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                        <Star className="h-4 w-4 text-gray-300" />
+                      </div>
+                      <span className="font-medium text-foreground">4.8</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Based on 31 reviews</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Most Used Lender */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Most Used Lender</h3>
+                  <div className="space-y-3">
+                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    <p className="text-sm text-muted-foreground">Used 22 times</p>
+                    <p className="text-sm text-muted-foreground">Last used: 12/10/2024</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Best Rate Available */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Best Rate Available</h3>
+                  <div className="space-y-3">
+                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    <p className="text-2xl font-bold text-green-600">5.95%</p>
+                    <p className="text-sm text-muted-foreground">Base rate for qualified borrowers</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         )
       case "company-docs":
