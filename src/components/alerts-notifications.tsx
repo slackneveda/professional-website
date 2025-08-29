@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Warning, Clock, ChartLine } from "@phosphor-icons/react"
+import { AlertTriangle as Warning, Clock, TrendingUp as ChartLine } from "lucide-react"
 
 interface Notification {
   id: string

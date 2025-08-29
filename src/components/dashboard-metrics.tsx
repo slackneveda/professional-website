@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, TrendingDown, DollarSign, ChartLine, Star, Calendar } from "@phosphor-icons/react"
+import { TrendingUp, TrendingDown, DollarSign, TrendingUp as ChartLine, Star, Calendar } from "lucide-react"
 
 interface MetricCardProps {
   title: string

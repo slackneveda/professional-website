@@ -17,32 +17,38 @@ import { AlertsNotifications } from "@/components/alerts-notifications"
 import { LenderDetailsModal } from "@/components/lender-details-modal"
 import {
   TrendingUp,
-  House,
+  Home as House,
   Handshake,
   FileText,
-  Robot,
+  Bot as Robot,
   Link,
-  Gear,
+  Settings as Gear,
   Upload,
   User,
-  Warning,
-  DownloadSimple,
-  MagnifyingGlass,
+  AlertTriangle as Warning,
+  Download as DownloadSimple,
+  Search as MagnifyingGlass,
   Eye,
   X,
   Star,
-  CaretLeft,
-  CaretRight,
-  ArrowSquareOut,
+  ChevronLeft as CaretLeft,
+  ChevronRight as CaretRight,
+  ExternalLink as ArrowSquareOut,
   File,
-  ChartLine,
-  ChatCircleDots,
+  TrendingUp as ChartLine,
+  MessageCircle as ChatCircleDots,
   ArrowUp,
-  ArrowClockwise
-} from "@phosphor-icons/react"
+  RotateCcw as ArrowClockwise,
+  Users,
+  Edit,
+  Trash2,
+  Plus,
+  EyeOff
+} from "lucide-react"
 
 export function MortgageDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard")
+  const [activeAdminTab, setActiveAdminTab] = useState("user-management")
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
@@ -1243,63 +1249,487 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             </Card>
           </div>
         )
-      case "crm-integration":
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">CRM Integration</h2>
-            <Card>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground">CRM integration settings will be implemented here.</p>
-              </CardContent>
-            </Card>
-          </div>
-        )
       case "admin":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">Administration</h2>
-            <Card>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground">Admin panel will be implemented here.</p>
-              </CardContent>
-            </Card>
+          <div className="max-w-7xl mx-auto space-y-8 p-6">
+            {/* Header */}
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Administration</h1>
+              <p className="text-gray-600 dark:text-gray-400 text-lg">Manage users, lenders, and system data</p>
+            </div>
+
+            {/* Admin Tabs */}
+            <div className="border-b border-gray-200 dark:border-gray-700">
+              <nav className="flex space-x-8">
+                {[
+                  { id: "user-management", label: "User Management" },
+                  { id: "lender-management", label: "Lender Management" },
+                  { id: "data-upload", label: "Data Upload" },
+                  { id: "audit-log", label: "Audit Log" }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveAdminTab(tab.id)}
+                    className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                      activeAdminTab === tab.id
+                        ? "border-blue-500 text-blue-600 dark:text-blue-400"
+                        : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            {/* Admin Tab Content */}
+            {activeAdminTab === "user-management" && (
+              <Card className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900">
+                <CardContent className="p-8 space-y-6">
+                  {/* User Management Header */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <Users className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">User Management</h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">Add, edit, and manage user accounts</p>
+                  </div>
+
+                  {/* Add New User Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">Add New User</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                      <div className="space-y-2">
+                        <Input 
+                          placeholder="Full Name"
+                          className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Input 
+                          placeholder="Email Address"
+                          type="email"
+                          className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Select defaultValue="user">
+                          <SelectTrigger className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3">
+                            <SelectValue placeholder="User" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="admin">Admin</SelectItem>
+                            <SelectItem value="user">User</SelectItem>
+                            <SelectItem value="manager">Manager</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 h-11 text-sm font-medium rounded-md transition-colors w-full flex items-center gap-2">
+                          <Plus className="h-4 w-4" />
+                          Add User
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Users Table */}
+                  <div className="space-y-4">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-gray-200 dark:border-gray-700">
+                            <th className="text-left py-3 px-0 text-sm font-medium text-gray-900 dark:text-white">Name</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Email</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Role</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Status</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Last Login</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Deals</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">John Smith</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">john.smith@mortgagebroker.com</td>
+                            <td className="py-4 px-4">
+                              <Badge className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800 px-2 py-1 text-xs font-medium">
+                                Admin
+                              </Badge>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">12/10/2024</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">45</td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Sarah Davis</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">sarah.davis@mortgagebroker.com</td>
+                            <td className="py-4 px-4">
+                              <Badge className="bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-100 dark:bg-gray-800/30 dark:text-gray-300 dark:border-gray-700 px-2 py-1 text-xs font-medium">
+                                User
+                              </Badge>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">12/9/2024</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">32</td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Mike Johnson</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">mike.johnson@mortgagebroker.com</td>
+                            <td className="py-4 px-4">
+                              <Badge className="bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-100 dark:bg-gray-800/30 dark:text-gray-300 dark:border-gray-700 px-2 py-1 text-xs font-medium">
+                                User
+                              </Badge>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">12/8/2024</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">28</td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Lisa Chen</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">lisa.chen@mortgagebroker.com</td>
+                            <td className="py-4 px-4">
+                              <Badge className="bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-100 dark:bg-gray-800/30 dark:text-gray-300 dark:border-gray-700 px-2 py-1 text-xs font-medium">
+                                User
+                              </Badge>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-red-600 dark:text-red-400 font-medium">Inactive</span>
+                            </td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">11/15/2024</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">12</td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <EyeOff className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Other admin tabs content */}
+            {activeAdminTab === "lender-management" && (
+              <Card className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900">
+                <CardContent className="p-8 space-y-6">
+                  {/* Lender Management Header */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <Handshake className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Lender Management</h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">Manage lender information and base rates</p>
+                  </div>
+
+                  {/* Add New Lender Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">Add New Lender</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                      <div className="space-y-2">
+                        <Input 
+                          placeholder="Lender Name"
+                          className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Input 
+                          placeholder="Base Rate (%)"
+                          type="text"
+                          className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Input 
+                          placeholder="Notes (optional)"
+                          className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div>
+                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 h-11 text-sm font-medium rounded-md transition-colors w-full flex items-center gap-2">
+                          <Plus className="h-4 w-4" />
+                          Add Lender
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Lenders Table */}
+                  <div className="space-y-4">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-gray-200 dark:border-gray-700">
+                            <th className="text-left py-3 px-0 text-sm font-medium text-gray-900 dark:text-white">Name</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Base Rate</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Notes</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Status</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">First National Bank</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">6.25%</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Preferred lender for commercial deals</td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Community Credit Union</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">5.95%</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Great rates for first-time buyers</td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Metro Mortgage Solutions</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">6.50%</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Specializes in jumbo loans</td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-green-600 dark:text-green-400 font-medium">Active</span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm font-medium text-gray-900 dark:text-white">Builder's Bank</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">7.00%</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Construction and development loans</td>
+                            <td className="py-4 px-4">
+                              <span className="text-sm text-red-600 dark:text-red-400 font-medium">Inactive</span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {activeAdminTab === "data-upload" && (
+              <Card className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900">
+                <CardContent className="p-8 space-y-6">
+                  {/* Data Upload Header */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <Upload className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Data Upload</h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">Upload CSV files with validation and error handling</p>
+                  </div>
+
+                  {/* CSV Upload Area */}
+                  <div 
+                    className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-16 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors cursor-pointer bg-white dark:bg-gray-800/50"
+                    onClick={() => document.getElementById('admin-csv-upload')?.click()}
+                  >
+                    <FileText className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                    <div className="space-y-3">
+                      <h3 className="text-xl font-medium text-gray-900 dark:text-white">Click to upload CSV file</h3>
+                      <p className="text-gray-500 dark:text-gray-400 text-base">Supports CSV files up to 10MB. Validation results will be provided.</p>
+                    </div>
+                    <input
+                      id="admin-csv-upload"
+                      type="file"
+                      accept=".csv"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          console.log('Admin CSV file selected:', file.name);
+                          // Here you would handle the CSV file upload and validation
+                        }
+                      }}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {activeAdminTab === "audit-log" && (
+              <Card className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900">
+                <CardContent className="p-8 space-y-6">
+                  {/* Audit Log Header */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <FileText className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Audit Log</h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">Track all system changes and user activities</p>
+                  </div>
+
+                  {/* Audit Log Table */}
+                  <div className="space-y-4">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-gray-200 dark:border-gray-700">
+                            <th className="text-left py-3 px-0 text-sm font-medium text-gray-900 dark:text-white">Timestamp</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">User</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Action</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Details</th>
+                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">IP Address</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                          <tr>
+                            <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/10/2024, 7:30:00 PM</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">John Smith</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">User Created</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Created new user account for Mike Johnson</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400 font-mono">192.168.1.100</td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/10/2024, 4:15:00 PM</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">Sarah Davis</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">CSV Upload</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Uploaded deals data - 25 records processed</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400 font-mono">192.168.1.105</td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/9/2024, 9:45:00 PM</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">John Smith</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Lender Rating Updated</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Updated First National Bank rating to 4.5 stars</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400 font-mono">192.168.1.100</td>
+                          </tr>
+                          <tr>
+                            <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/9/2024, 2:20:00 PM</td>
+                            <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">System</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Auto Sync</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">CRM sync completed - 47 records synchronized</td>
+                            <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400 font-mono">system</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         )
       case "crm-integration":
         return (
-          <div className="space-y-6">
+          <div className="max-w-4xl mx-auto space-y-8 p-6">
             {/* Header */}
             <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">CRM Integration</h1>
-              <p className="text-muted-foreground text-base">Connect your CRM system or upload data via CSV to keep deal information synchronized</p>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">CRM Integration</h1>
+              <p className="text-gray-600 dark:text-gray-400 text-lg">Connect your CRM system or upload data via CSV to keep deal information synchronized</p>
             </div>
 
             {/* Connection Status Card */}
-            <Card className="bg-blue-50/50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
+            <Card className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900">
               <CardContent className="p-8 space-y-6">
                 {/* Connection Status Header */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <Gear className="h-5 w-5 text-foreground" />
-                    <h2 className="text-xl font-semibold text-foreground">Connection Status</h2>
+                    <Gear className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Connection Status</h2>
                   </div>
-                  <p className="text-muted-foreground">Configure your CRM connection and sync settings</p>
+                  <p className="text-gray-600 dark:text-gray-400">Configure your CRM connection and sync settings</p>
                 </div>
 
                 {/* Not Connected Badge */}
                 <div className="flex items-start">
-                  <Badge className="bg-red-100 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800 px-3 py-1">
+                  <Badge className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800 px-3 py-1.5 text-sm font-medium">
                     Not Connected
                   </Badge>
                 </div>
 
                 {/* Form Fields */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
                   {/* CRM System */}
                   <div className="space-y-3">
-                    <label className="text-sm font-medium text-foreground">CRM System</label>
+                    <label className="text-sm font-medium text-gray-900 dark:text-white block">CRM System</label>
                     <Select defaultValue="salesforce">
-                      <SelectTrigger className="bg-background h-12 text-base">
+                      <SelectTrigger className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3">
                         <SelectValue placeholder="Select CRM system" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1314,20 +1744,162 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
 
                   {/* API Key */}
                   <div className="space-y-3">
-                    <label className="text-sm font-medium text-foreground">API Key</label>
+                    <label className="text-sm font-medium text-gray-900 dark:text-white block">API Key</label>
                     <Input 
                       type="password"
                       placeholder="Enter your API key"
-                      className="bg-background h-12 text-base placeholder:text-muted-foreground/60"
+                      className="w-full h-11 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 placeholder:text-gray-500 dark:placeholder:text-gray-400"
                     />
                   </div>
                 </div>
 
                 {/* Connect Button */}
-                <div className="flex justify-start pt-2">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 h-auto text-base font-medium rounded-lg">
+                <div className="flex justify-start pt-6">
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2.5 text-sm font-medium rounded-md transition-colors">
                     Connect to CRM
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* CSV Data Upload Section */}
+            <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
+              <CardContent className="p-8 space-y-6">
+                {/* CSV Upload Header */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <Upload className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">CSV Data Upload</h2>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400">Upload deal data via CSV file when CRM integration is not available</p>
+                </div>
+
+                {/* Download Template Section */}
+                <div className="flex items-center gap-4">
+                  <Button 
+                    onClick={() => {
+                      // Create sample CSV data
+                      const csvContent = "Deal ID,Client Name,Property Address,Loan Amount,Status,Lender,Rate,Date\nDL001,John Smith,123 Main St,250000,In Progress,Wells Fargo,3.5%,2024-08-15\nDL002,Jane Doe,456 Oak Ave,180000,Approved,Chase Bank,3.2%,2024-08-20";
+                      const blob = new Blob([csvContent], { type: 'text/csv' });
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'template.csv';
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                    }}
+                    variant="outline" 
+                    className="bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700 dark:bg-blue-950/20 dark:hover:bg-blue-950/30 dark:border-blue-800 dark:text-blue-300"
+                  >
+                    Download Template
+                  </Button>
+                  <span className="text-gray-600 dark:text-gray-400 text-sm">Use our template to ensure proper data formatting</span>
+                </div>
+
+                {/* CSV Upload Area */}
+                <div 
+                  className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-12 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors cursor-pointer"
+                  onClick={() => document.getElementById('csv-upload')?.click()}
+                >
+                  <File className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <div className="space-y-2">
+                    <p className="text-lg font-medium text-gray-900 dark:text-white">Click to upload CSV file</p>
+                    <p className="text-gray-500 dark:text-gray-400">Supports CSV files up to 10MB</p>
+                  </div>
+                  <input
+                    id="csv-upload"
+                    type="file"
+                    accept=".csv"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        console.log('CSV file selected:', file.name);
+                        // Here you would handle the CSV file upload
+                      }
+                    }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Sync History Section */}
+            <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
+              <CardContent className="p-8 space-y-6">
+                {/* Sync History Header */}
+                <div className="space-y-2">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Sync History</h2>
+                  <p className="text-gray-600 dark:text-gray-400">Recent data synchronization activities</p>
+                </div>
+
+                {/* Sync History Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200 dark:border-gray-700">
+                        <th className="text-left py-3 px-0 text-sm font-medium text-gray-900 dark:text-white">Timestamp</th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Type</th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Status</th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Records</th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Errors</th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                      <tr>
+                        <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/10/2024, 7:30:00 PM</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Auto</td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span className="text-sm text-green-600 dark:text-green-400">Success</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">47</td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">0</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Daily sync completed successfully</td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/9/2024, 2:15:00 PM</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Manual</td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            <span className="text-sm text-yellow-600 dark:text-yellow-400">Partial</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">23</td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">2</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">2 records failed validation - missing required fields</td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/8/2024, 9:45:00 PM</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Csv</td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span className="text-sm text-green-600 dark:text-green-400">Success</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">15</td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">0</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">CSV import completed - new deals added</td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-0 text-sm text-gray-900 dark:text-white">12/7/2024, 1:00:00 PM</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">Auto</td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span className="text-sm text-red-600 dark:text-red-400">Error</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">0</td>
+                        <td className="py-4 px-4 text-sm text-gray-900 dark:text-white">1</td>
+                        <td className="py-4 px-4 text-sm text-gray-600 dark:text-gray-400">API connection timeout - retrying in 1 hour</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
