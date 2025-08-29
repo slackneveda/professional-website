@@ -15,6 +15,7 @@ import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { DashboardCharts } from "@/components/dashboard-charts"
 import { RecentDeals } from "@/components/recent-deals"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect"
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import { AlertsNotifications } from "@/components/alerts-notifications"
 import { LenderDetailsModal } from "@/components/lender-details-modal"
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card"
@@ -410,7 +411,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   ]}
                   className="justify-center sm:justify-start"
                 />
-                <p className="text-muted-foreground mt-3 text-base sm:text-lg">Here's what's happening with your mortgage deals today.</p>
+                <TextGenerateEffect words="Here's what's happening with your mortgage deals today." className="text-muted-foreground mt-3 text-base sm:text-lg" />
               </div>
               <Select defaultValue="this-month">
                 <SelectTrigger className="w-full sm:w-40">
@@ -616,7 +617,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   ]}
                   className="justify-center sm:justify-start"
                 />
-                <p className="text-muted-foreground mt-3 text-base sm:text-lg">View ratings, usage stats, and manage lender relationships</p>
+                <TextGenerateEffect words="View ratings, usage stats, and manage lender relationships" className="text-muted-foreground mt-3 text-base sm:text-lg" />
               </div>
               {/* Search Input */}
               <div className="relative w-full sm:w-80">
@@ -884,19 +885,20 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                 ]}
                 className="justify-center"
               />
-              <p className="text-muted-foreground text-lg">Access policies, marketing materials, training resources, and operational procedures</p>
+              <TextGenerateEffect words="Access policies, marketing materials, training resources, and operational procedures" className="text-muted-foreground text-lg" />
             </div>
 
             {/* Search and Stats */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div className="text-sm text-muted-foreground">
-                67 total documents across 4 categories
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-background/50 rounded-lg p-6 border border-border">
+              <div className="flex items-center gap-3">
+                <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
+                <TextGenerateEffect words="67 total documents across 4 categories" className="text-base font-medium text-muted-foreground" />
               </div>
-              <div className="relative w-full sm:w-96">
-                <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative w-full lg:w-96">
+                <MagnifyingGlass className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   placeholder="Search documents and categories..."
-                  className="pl-10"
+                  className="pl-12 h-12 text-base bg-background border-2 border-border focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-lg shadow-sm transition-all duration-200"
                 />
               </div>
             </div>
@@ -1197,10 +1199,14 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             </div>
 
             {/* Quick Access Section - also with 3D cards */}
-            <div className="space-y-4">
-              <div>
-                <h2 className="text-lg font-semibold text-foreground">Quick Access</h2>
-                <p className="text-sm text-muted-foreground">Frequently accessed documents and resources</p>
+            <div className="space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Quick Access</h2>
+                <TextGenerateEffect 
+                  words="Frequently accessed documents and resources" 
+                  className="text-lg text-muted-foreground font-medium" 
+                  duration={0.8}
+                />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1259,7 +1265,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                   ]}
                   className="justify-center sm:justify-start"
                 />
-                <p className="text-muted-foreground text-lg">Ask questions about mortgage products, guidelines, and lending requirements</p>
+                <TextGenerateEffect words="Ask questions about mortgage products, guidelines, and lending requirements" className="text-muted-foreground text-lg" />
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
@@ -1418,9 +1424,18 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
         return (
           <div className="max-w-7xl mx-auto space-y-8 p-6">
             {/* Header */}
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Administration</h1>
-              <p className="text-gray-600 dark:text-gray-400 text-lg">Manage users, lenders, and system data</p>
+            <div className="space-y-4 text-center">
+              <TypewriterEffectSmooth 
+                words={[
+                  { text: "Administration", className: "text-blue-500 dark:text-blue-400" }
+                ]}
+                className="justify-center"
+              />
+              <TextGenerateEffect 
+                words="Manage users, lenders, and system data" 
+                className="text-gray-600 dark:text-gray-400 text-lg" 
+                duration={0.8}
+              />
             </div>
 
             {/* Admin Tabs */}
@@ -1864,9 +1879,19 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
         return (
           <div className="max-w-4xl mx-auto space-y-8 p-6">
             {/* Header */}
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">CRM Integration</h1>
-              <p className="text-gray-600 dark:text-gray-400 text-lg">Connect your CRM system or upload data via CSV to keep deal information synchronized</p>
+            <div className="space-y-4 text-center">
+              <TypewriterEffectSmooth 
+                words={[
+                  { text: "CRM" },
+                  { text: "Integration", className: "text-blue-500 dark:text-blue-400" }
+                ]}
+                className="justify-center"
+              />
+              <TextGenerateEffect 
+                words="Connect your CRM system or upload data via CSV to keep deal information synchronized" 
+                className="text-gray-600 dark:text-gray-400 text-lg" 
+                duration={0.8}
+              />
             </div>
 
             {/* Connection Status Card */}
@@ -2077,40 +2102,60 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 sm:px-6 py-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex-1 min-w-0 text-center sm:text-left">
-              <TypewriterEffectSmooth 
-                words={[
-                  { text: "Mortgage" },
-                  { text: "Brokerage" },
-                  { text: "Portal", className: "text-blue-500 dark:text-blue-400" }
-                ]}
-                className="justify-center sm:justify-start"
-              />
-              <p className="text-sm sm:text-base text-muted-foreground mt-2">Manage deals, lenders, and client relationships</p>
+      {/* Enhanced Header */}
+      <header className="border-b bg-gradient-to-r from-card via-card to-card/95 shadow-sm">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6">
+            {/* Left Section - Branding */}
+            <div className="flex-1 min-w-0 text-center lg:text-left">
+              <div className="flex flex-col items-center lg:items-start">
+                <TypewriterEffectSmooth 
+                  words={[
+                    { text: "Mortgage" },
+                    { text: "Brokerage" },
+                    { text: "Portal", className: "text-blue-500 dark:text-blue-400" }
+                  ]}
+                  className="justify-center lg:justify-start text-xl sm:text-2xl lg:text-3xl"
+                />
+                <TextGenerateEffect 
+                  words="Comprehensive platform to manage deals, lenders, and client relationships" 
+                  className="text-sm sm:text-base lg:text-lg text-muted-foreground font-medium max-w-2xl mt-1" 
+                  duration={1.0}
+                />
+              </div>
             </div>
-            <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
-              <ThemeToggle />
-              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+
+            {/* Right Section - User Controls */}
+            <div className="flex items-center gap-3 lg:gap-4 w-full lg:w-auto justify-center lg:justify-end">
+              {/* Theme Toggle */}
+              <div className="flex items-center justify-center p-2 rounded-lg bg-muted/50 hover:bg-muted/80 transition-colors">
+                <ThemeToggle />
+              </div>
+
+              {/* User Profile Section */}
+              <div className="flex items-center gap-2 lg:gap-3 px-3 py-2 lg:px-4 lg:py-2.5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all duration-200 border border-border/50">
                 <div className="text-right hidden sm:block">
-                  <div className="text-sm font-medium">John Smith</div>
-                  <div className="text-xs text-muted-foreground">Senior Mortgage Broker</div>
+                  <div className="text-sm lg:text-base font-semibold text-foreground leading-tight">John Smith</div>
+                  <div className="text-xs lg:text-sm text-muted-foreground font-medium leading-tight">Senior Mortgage Broker</div>
                 </div>
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    <User className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Avatar className="h-8 w-8 lg:h-10 lg:w-10 ring-2 ring-primary/20 hover:ring-primary/40 transition-all">
+                  <AvatarFallback className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold text-xs lg:text-sm">
+                    JS
                   </AvatarFallback>
                 </Avatar>
               </div>
+
+              {/* Import Button */}
               <Dialog open={isImportDialogOpen} onOpenChange={setIsImportDialogOpen}>
                 <DialogTrigger asChild>
-                  <ThemedShimmerButton variant="primary" className="text-xs sm:text-sm px-2 sm:px-4 h-9">
-                    <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                    <span className="hidden xs:inline">Import Data</span>
-                    <span className="xs:hidden">Import</span>
+                  <ThemedShimmerButton 
+                    variant="primary" 
+                    className="text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2.5 font-medium shadow-lg hover:shadow-xl transition-all duration-200 h-10 lg:h-11"
+                    shimmerDuration="2s"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    <span className="hidden sm:inline">Import Data</span>
+                    <span className="sm:hidden">Import</span>
                   </ThemedShimmerButton>
                 </DialogTrigger>
                 <DialogContent className="w-[95vw] max-w-2xl max-h-[85vh] overflow-y-auto sm:w-[90vw] md:w-[80vw] lg:max-w-2xl">
