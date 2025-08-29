@@ -10,11 +10,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemedShimmerButton } from "@/components/themed-shimmer-button"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { DashboardCharts } from "@/components/dashboard-charts"
 import { RecentDeals } from "@/components/recent-deals"
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect"
 import { AlertsNotifications } from "@/components/alerts-notifications"
 import { LenderDetailsModal } from "@/components/lender-details-modal"
+import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card"
 import {
   TrendingUp,
   Home as House,
@@ -396,10 +399,18 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       case "dashboard":
         return (
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-bold">Welcome back, John Smith</h2>
-                <p className="text-muted-foreground mt-1 text-sm sm:text-base">Here's what's happening with your mortgage deals today.</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div className="text-center sm:text-left">
+                <TypewriterEffectSmooth 
+                  words={[
+                    { text: "Welcome" },
+                    { text: "back," },
+                    { text: "John", className: "text-blue-500 dark:text-blue-400" },
+                    { text: "Smith", className: "text-blue-500 dark:text-blue-400" }
+                  ]}
+                  className="justify-center sm:justify-start"
+                />
+                <p className="text-muted-foreground mt-3 text-base sm:text-lg">Here's what's happening with your mortgage deals today.</p>
               </div>
               <Select defaultValue="this-month">
                 <SelectTrigger className="w-full sm:w-40">
@@ -596,10 +607,16 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
         return (
           <div className="space-y-6">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-bold">Lender Management</h2>
-                <p className="text-muted-foreground mt-1 text-sm sm:text-base">View ratings, usage stats, and manage lender relationships</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div className="text-center sm:text-left">
+                <TypewriterEffectSmooth 
+                  words={[
+                    { text: "Lender" },
+                    { text: "Management", className: "text-blue-500 dark:text-blue-400" }
+                  ]}
+                  className="justify-center sm:justify-start"
+                />
+                <p className="text-muted-foreground mt-3 text-base sm:text-lg">View ratings, usage stats, and manage lender relationships</p>
               </div>
               {/* Search Input */}
               <div className="relative w-full sm:w-80">
@@ -741,11 +758,28 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             {/* Lender Insights Cards - Bottom Section */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Top Rated Lender */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Top Rated Lender</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+              <CardContainer className="py-8">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-56 rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="w-full"
+                  >
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Top Rated Lender</h3>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="80"
+                    className="w-full"
+                  >
+                    <div className="space-y-3">
+                      <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="70"
+                    className="w-full mt-3"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="flex items-center">
                         {[1, 2, 3, 4].map((star) => (
@@ -755,34 +789,86 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                       </div>
                       <span className="font-medium text-foreground">4.8</span>
                     </div>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="60"
+                    className="w-full mt-3"
+                  >
                     <p className="text-sm text-muted-foreground">Based on 31 reviews</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
 
               {/* Most Used Lender */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Most Used Lender</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+              <CardContainer className="py-8">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-56 rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="w-full"
+                  >
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Most Used Lender</h3>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="80"
+                    className="w-full"
+                  >
+                    <div className="space-y-3">
+                      <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="70"
+                    className="w-full mt-3"
+                  >
                     <p className="text-sm text-muted-foreground">Used 22 times</p>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="60"
+                    className="w-full mt-1"
+                  >
                     <p className="text-sm text-muted-foreground">Last used: 12/10/2024</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
 
               {/* Best Rate Available */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Best Rate Available</h3>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+              <CardContainer className="py-8">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-56 rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="w-full"
+                  >
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Best Rate Available</h3>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="80"
+                    className="w-full"
+                  >
+                    <div className="space-y-3">
+                      <h4 className="text-xl font-bold text-foreground">Community Credit Union</h4>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="90"
+                    className="w-full mt-3"
+                  >
                     <p className="text-2xl font-bold text-green-600">5.95%</p>
+                  </CardItem>
+
+                  <CardItem
+                    translateZ="60"
+                    className="w-full mt-3"
+                  >
                     <p className="text-sm text-muted-foreground">Base rate for qualified borrowers</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
             </div>
           </div>
         )
@@ -790,9 +876,15 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
         return (
           <div className="space-y-6">
             {/* Header */}
-            <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Company Documents</h1>
-              <p className="text-muted-foreground text-base">Access policies, marketing materials, training resources, and operational procedures</p>
+            <div className="space-y-4 text-center">
+              <TypewriterEffectSmooth 
+                words={[
+                  { text: "Company" },
+                  { text: "Documents", className: "text-blue-500 dark:text-blue-400" }
+                ]}
+                className="justify-center"
+              />
+              <p className="text-muted-foreground text-lg">Access policies, marketing materials, training resources, and operational procedures</p>
             </div>
 
             {/* Search and Stats */}
@@ -809,57 +901,70 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
               </div>
             </div>
 
-            {/* Document Categories Grid */}
+            {/* Document Categories Grid with 3D Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Company Policies */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6 space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-background rounded-lg">
-                        <File className="h-5 w-5 text-muted-foreground" />
+              <CardContainer className="py-10">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="text-xl font-bold text-neutral-600 dark:text-white w-full"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-background rounded-lg">
+                          <File className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Company Policies</h3>
+                          <p className="text-sm text-muted-foreground">HR policies, compliance guidelines, and procedures</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">Company Policies</h3>
-                        <p className="text-sm text-muted-foreground">HR policies, compliance guidelines, and procedures</p>
+                      <Badge variant="secondary" className="text-xs">12 items</Badge>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                  >
+                    <div className="text-xs text-muted-foreground mb-4">
+                      Last updated: 12/1/2024
+                    </div>
+                  </CardItem>
+
+                  <CardItem translateZ="100" className="w-full mt-4">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Employee Handbook</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Code of Conduct</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Privacy Policy</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>GDPR Compliance Guidelines</span>
+                        </div>
+                        <div className="text-sm text-primary cursor-pointer hover:underline">
+                          +8 more documents
+                        </div>
                       </div>
                     </div>
-                    <Badge variant="secondary" className="text-xs">12 items</Badge>
-                  </div>
+                  </CardItem>
 
-                  <div className="text-xs text-muted-foreground">
-                    Last updated: 12/1/2024
-                  </div>
-
-                  {/* Recent Documents */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Employee Handbook</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Code of Conduct</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Privacy Policy</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>GDPR Compliance Guidelines</span>
-                      </div>
-                      <div className="text-sm text-primary cursor-pointer hover:underline">
-                        +8 more documents
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-4 space-y-2">
+                  <CardItem
+                    translateZ="120"
+                    className="w-full mt-6 space-y-2"
+                  >
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                       <ArrowSquareOut className="h-4 w-4 mr-2" />
                       Open in SharePoint
@@ -867,59 +972,72 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     <Button variant="ghost" size="sm" className="w-full">
                       <DownloadSimple className="h-4 w-4" />
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
 
               {/* Marketing Materials */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6 space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-background rounded-lg">
-                        <ChartLine className="h-5 w-5 text-muted-foreground" />
+              <CardContainer className="py-10">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="text-xl font-bold text-neutral-600 dark:text-white w-full"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-background rounded-lg">
+                          <ChartLine className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Marketing Materials</h3>
+                          <p className="text-sm text-muted-foreground">Brochures, presentations, and promotional content</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">Marketing Materials</h3>
-                        <p className="text-sm text-muted-foreground">Brochures, presentations, and promotional content</p>
+                      <Badge variant="secondary" className="text-xs">18 items</Badge>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                  >
+                    <div className="text-xs text-muted-foreground mb-4">
+                      Last updated: 11/28/2024
+                    </div>
+                  </CardItem>
+
+                  <CardItem translateZ="100" className="w-full mt-4">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Mortgage Product Brochures</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Rate Sheets (Current)</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Client Presentation Templates</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Brand Guidelines</span>
+                        </div>
+                        <div className="text-sm text-primary cursor-pointer hover:underline">
+                          +14 more documents
+                        </div>
                       </div>
                     </div>
-                    <Badge variant="secondary" className="text-xs">18 items</Badge>
-                  </div>
+                  </CardItem>
 
-                  <div className="text-xs text-muted-foreground">
-                    Last updated: 11/28/2024
-                  </div>
-
-                  {/* Recent Documents */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Mortgage Product Brochures</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Rate Sheets (Current)</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Client Presentation Templates</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Brand Guidelines</span>
-                      </div>
-                      <div className="text-sm text-primary cursor-pointer hover:underline">
-                        +14 more documents
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-4 space-y-2">
+                  <CardItem
+                    translateZ="120"
+                    className="w-full mt-6 space-y-2"
+                  >
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                       <ArrowSquareOut className="h-4 w-4 mr-2" />
                       Open in SharePoint
@@ -927,59 +1045,72 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     <Button variant="ghost" size="sm" className="w-full">
                       <DownloadSimple className="h-4 w-4" />
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
 
               {/* Training Resources */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6 space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-background rounded-lg">
-                        <User className="h-5 w-5 text-muted-foreground" />
+              <CardContainer className="py-10">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="text-xl font-bold text-neutral-600 dark:text-white w-full"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-background rounded-lg">
+                          <User className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Training Resources</h3>
+                          <p className="text-sm text-muted-foreground">Training materials, certifications, and learning paths</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">Training Resources</h3>
-                        <p className="text-sm text-muted-foreground">Training materials, certifications, and learning paths</p>
+                      <Badge variant="secondary" className="text-xs">15 items</Badge>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                  >
+                    <div className="text-xs text-muted-foreground mb-4">
+                      Last updated: 12/5/2024
+                    </div>
+                  </CardItem>
+
+                  <CardItem translateZ="100" className="w-full mt-4">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>New Broker Onboarding</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Mortgage Fundamentals Course</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Underwriting Guidelines</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Credit Analysis Training</span>
+                        </div>
+                        <div className="text-sm text-primary cursor-pointer hover:underline">
+                          +11 more documents
+                        </div>
                       </div>
                     </div>
-                    <Badge variant="secondary" className="text-xs">15 items</Badge>
-                  </div>
+                  </CardItem>
 
-                  <div className="text-xs text-muted-foreground">
-                    Last updated: 12/5/2024
-                  </div>
-
-                  {/* Recent Documents */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>New Broker Onboarding</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Mortgage Fundamentals Course</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Underwriting Guidelines</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Credit Analysis Training</span>
-                      </div>
-                      <div className="text-sm text-primary cursor-pointer hover:underline">
-                        +11 more documents
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-4 space-y-2">
+                  <CardItem
+                    translateZ="120"
+                    className="w-full mt-6 space-y-2"
+                  >
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                       <ArrowSquareOut className="h-4 w-4 mr-2" />
                       Open in SharePoint
@@ -987,59 +1118,72 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     <Button variant="ghost" size="sm" className="w-full">
                       <DownloadSimple className="h-4 w-4" />
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
 
               {/* Operations Manual */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-6 space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-background rounded-lg">
-                        <Gear className="h-5 w-5 text-muted-foreground" />
+              <CardContainer className="py-10">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="text-xl font-bold text-neutral-600 dark:text-white w-full"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-background rounded-lg">
+                          <Gear className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Operations Manual</h3>
+                          <p className="text-sm text-muted-foreground">Standard operating procedures and workflows</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">Operations Manual</h3>
-                        <p className="text-sm text-muted-foreground">Standard operating procedures and workflows</p>
+                      <Badge variant="secondary" className="text-xs">22 items</Badge>
+                    </div>
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                  >
+                    <div className="text-xs text-muted-foreground mb-4">
+                      Last updated: 12/3/2024
+                    </div>
+                  </CardItem>
+
+                  <CardItem translateZ="100" className="w-full mt-4">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Loan Processing Checklist</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Application Intake Procedures</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Document Collection Guidelines</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
+                          <File className="h-4 w-4" />
+                          <span>Client Onboarding Workflow</span>
+                        </div>
+                        <div className="text-sm text-primary cursor-pointer hover:underline">
+                          +18 more documents
+                        </div>
                       </div>
                     </div>
-                    <Badge variant="secondary" className="text-xs">22 items</Badge>
-                  </div>
+                  </CardItem>
 
-                  <div className="text-xs text-muted-foreground">
-                    Last updated: 12/3/2024
-                  </div>
-
-                  {/* Recent Documents */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-foreground">Recent Documents:</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Loan Processing Checklist</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Application Intake Procedures</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Document Collection Guidelines</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
-                        <File className="h-4 w-4" />
-                        <span>Client Onboarding Workflow</span>
-                      </div>
-                      <div className="text-sm text-primary cursor-pointer hover:underline">
-                        +18 more documents
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-4 space-y-2">
+                  <CardItem
+                    translateZ="120"
+                    className="w-full mt-6 space-y-2"
+                  >
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                       <ArrowSquareOut className="h-4 w-4 mr-2" />
                       Open in SharePoint
@@ -1047,42 +1191,57 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     <Button variant="ghost" size="sm" className="w-full">
                       <DownloadSimple className="h-4 w-4" />
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
             </div>
 
-            {/* Quick Access Section */}
+            {/* Quick Access Section - also with 3D cards */}
             <div className="space-y-4">
               <div>
                 <h2 className="text-lg font-semibold text-foreground">Quick Access</h2>
                 <p className="text-sm text-muted-foreground">Frequently accessed documents and resources</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Current Rate Sheets */}
-                <Card className="bg-background border border-border">
-                  <CardContent className="p-4">
-                    <h3 className="font-medium text-foreground mb-1">Current Rate Sheets</h3>
-                    <p className="text-sm text-muted-foreground">Updated daily</p>
-                  </CardContent>
-                </Card>
+                <CardContainer className="py-8">
+                  <CardBody className="bg-background border border-border w-full h-48 rounded-xl p-8 relative group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1] flex flex-col justify-center">
+                    <CardItem
+                      translateZ="50"
+                      className="w-full text-center"
+                    >
+                      <h3 className="text-lg font-semibold text-foreground mb-3">Current Rate Sheets</h3>
+                      <p className="text-base text-muted-foreground">Updated daily</p>
+                    </CardItem>
+                  </CardBody>
+                </CardContainer>
 
                 {/* Underwriting Guidelines */}
-                <Card className="bg-background border border-border">
-                  <CardContent className="p-4">
-                    <h3 className="font-medium text-foreground mb-1">Underwriting Guidelines</h3>
-                    <p className="text-sm text-muted-foreground">All lender requirements</p>
-                  </CardContent>
-                </Card>
+                <CardContainer className="py-8">
+                  <CardBody className="bg-background border border-border w-full h-48 rounded-xl p-8 relative group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1] flex flex-col justify-center">
+                    <CardItem
+                      translateZ="50"
+                      className="w-full text-center"
+                    >
+                      <h3 className="text-lg font-semibold text-foreground mb-3">Underwriting Guidelines</h3>
+                      <p className="text-base text-muted-foreground">All lender requirements</p>
+                    </CardItem>
+                  </CardBody>
+                </CardContainer>
 
                 {/* Forms Library */}
-                <Card className="bg-background border border-border">
-                  <CardContent className="p-4">
-                    <h3 className="font-medium text-foreground mb-1">Forms Library</h3>
-                    <p className="text-sm text-muted-foreground">Printable client forms</p>
-                  </CardContent>
-                </Card>
+                <CardContainer className="py-8">
+                  <CardBody className="bg-background border border-border w-full h-48 rounded-xl p-8 relative group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1] flex flex-col justify-center">
+                    <CardItem
+                      translateZ="50"
+                      className="w-full text-center"
+                    >
+                      <h3 className="text-lg font-semibold text-foreground mb-3">Forms Library</h3>
+                      <p className="text-base text-muted-foreground">Printable client forms</p>
+                    </CardItem>
+                  </CardBody>
+                </CardContainer>
               </div>
             </div>
           </div>
@@ -1091,10 +1250,16 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
         return (
           <div className="space-y-6">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-2">
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Mortgage Assistant</h1>
-                <p className="text-muted-foreground text-base">Ask questions about mortgage products, guidelines, and lending requirements</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div className="space-y-4 text-center sm:text-left">
+                <TypewriterEffectSmooth 
+                  words={[
+                    { text: "Mortgage" },
+                    { text: "Assistant", className: "text-blue-500 dark:text-blue-400" }
+                  ]}
+                  className="justify-center sm:justify-start"
+                />
+                <p className="text-muted-foreground text-lg">Ask questions about mortgage products, guidelines, and lending requirements</p>
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
@@ -1325,10 +1490,10 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                         </Select>
                       </div>
                       <div>
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 h-11 text-sm font-medium rounded-md transition-colors w-full flex items-center gap-2">
+                        <ThemedShimmerButton variant="primary" className="px-6 py-2.5 h-11 text-sm font-medium w-full flex items-center gap-2">
                           <Plus className="h-4 w-4" />
                           Add User
-                        </Button>
+                        </ThemedShimmerButton>
                       </div>
                     </div>
                   </div>
@@ -1490,10 +1655,10 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                         />
                       </div>
                       <div>
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 h-11 text-sm font-medium rounded-md transition-colors w-full flex items-center gap-2">
+                        <ThemedShimmerButton variant="primary" className="px-6 py-2.5 h-11 text-sm font-medium w-full flex items-center gap-2">
                           <Plus className="h-4 w-4" />
                           Add Lender
-                        </Button>
+                        </ThemedShimmerButton>
                       </div>
                     </div>
                   </div>
@@ -1755,9 +1920,9 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
 
                 {/* Connect Button */}
                 <div className="flex justify-start pt-6">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2.5 text-sm font-medium rounded-md transition-colors">
+                  <ThemedShimmerButton variant="primary" className="px-6 py-2.5 text-sm font-medium">
                     Connect to CRM
-                  </Button>
+                  </ThemedShimmerButton>
                 </div>
               </CardContent>
             </Card>
@@ -1914,11 +2079,18 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 sm:px-6 py-4">
+        <div className="container mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <h1 className="text-xl sm:text-2xl font-bold truncate">Mortgage Brokerage Portal</h1>
-              <p className="text-xs sm:text-sm text-muted-foreground truncate">Manage deals, lenders, and client relationships</p>
+            <div className="flex-1 min-w-0 text-center sm:text-left">
+              <TypewriterEffectSmooth 
+                words={[
+                  { text: "Mortgage" },
+                  { text: "Brokerage" },
+                  { text: "Portal", className: "text-blue-500 dark:text-blue-400" }
+                ]}
+                className="justify-center sm:justify-start"
+              />
+              <p className="text-sm sm:text-base text-muted-foreground mt-2">Manage deals, lenders, and client relationships</p>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
               <ThemeToggle />
@@ -1935,11 +2107,11 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
               </div>
               <Dialog open={isImportDialogOpen} onOpenChange={setIsImportDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="text-xs sm:text-sm px-2 sm:px-4" size="sm">
+                  <ThemedShimmerButton variant="primary" className="text-xs sm:text-sm px-2 sm:px-4 h-9">
                     <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     <span className="hidden xs:inline">Import Data</span>
                     <span className="xs:hidden">Import</span>
-                  </Button>
+                  </ThemedShimmerButton>
                 </DialogTrigger>
                 <DialogContent className="w-[95vw] max-w-2xl max-h-[85vh] overflow-y-auto sm:w-[90vw] md:w-[80vw] lg:max-w-2xl">
                   <DialogHeader className="pb-4 border-b">
@@ -2162,23 +2334,28 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       {/* Navigation */}
       <nav className="bg-card overflow-x-auto">
         <div className="container mx-auto px-4 sm:px-6">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full min-w-max grid-cols-7 bg-transparent p-0 h-auto">
+          <div className="flex justify-center">
+            <div className="flex gap-2 py-4 min-w-max">
               {tabConfig.map((tab) => {
                 const Icon = tab.icon
+                const isActive = activeTab === tab.id
                 return (
-                  <TabsTrigger
+                  <ThemedShimmerButton
                     key={tab.id}
-                    value={tab.id}
-                    className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 px-2 sm:px-4 py-2 sm:py-3 rounded-none data-[state=active]:bg-muted/50 data-[state=active]:text-primary hover:text-primary transition-colors min-w-[80px] sm:min-w-[120px]"
+                    variant={isActive ? "primary" : "outline"}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 px-3 sm:px-4 py-2 sm:py-3 min-w-[80px] sm:min-w-[120px] ${
+                      isActive ? 'scale-105 shadow-lg' : 'hover:scale-102'
+                    } transition-all duration-200`}
+                    shimmerDuration="2.5s"
                   >
                     <Icon className="h-4 w-4 shrink-0" />
                     <span className="text-xs sm:text-sm text-center truncate">{tab.label}</span>
-                  </TabsTrigger>
+                  </ThemedShimmerButton>
                 )
               })}
-            </TabsList>
-          </Tabs>
+            </div>
+          </div>
         </div>
       </nav>
 
