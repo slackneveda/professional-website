@@ -331,7 +331,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       </header>
 
       {/* Navigation */}
-      <nav className="border-b bg-card overflow-x-auto">
+      <nav className="bg-card overflow-x-auto">
         <div className="container mx-auto px-4 sm:px-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full min-w-max grid-cols-7 bg-transparent p-0 h-auto">
