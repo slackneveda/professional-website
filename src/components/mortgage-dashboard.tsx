@@ -86,13 +86,16 @@ export function MortgageDashboard() {
     }
   ]
 
-  // Filter deals based on search term and status
+  // Filter deals based on search term, status, and lender
   const filteredDeals = dealsData.filter((deal) => {
     const matchesSearch = deal.borrower.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         deal.id.toLowerCase().includes(searchTerm.toLowerCase())
+                         deal.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         deal.lender.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === "all-statuses" || 
                          deal.status.toLowerCase() === statusFilter.toLowerCase()
-    return matchesSearch && matchesStatus
+    const matchesLender = lenderFilter === "all-lenders" || 
+                         deal.lender.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '') === lenderFilter.toLowerCase()
+    return matchesSearch && matchesStatus && matchesLender
   })
 
   const getStatusBadge = (status: string) => {
@@ -223,23 +226,23 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                       <SelectTrigger className="w-full lg:w-48 bg-background border-border rounded-lg">
                         <SelectValue placeholder="All Statuses" />
                       </SelectTrigger>
-                      <SelectContent className="w-[var(--radix-select-trigger-width)] p-0 border-border rounded-lg shadow-lg">
-                        <SelectItem value="all-statuses" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                      <SelectContent className="w-[var(--radix-select-trigger-width)] p-0 border-border rounded-xl shadow-lg bg-popover">
+                        <SelectItem value="all-statuses" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           All Statuses
                         </SelectItem>
-                        <SelectItem value="submitted" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                        <SelectItem value="submitted" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           Submitted
                         </SelectItem>
-                        <SelectItem value="underwriting" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                        <SelectItem value="underwriting" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           Underwriting
                         </SelectItem>
-                        <SelectItem value="approved" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                        <SelectItem value="approved" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           Approved
                         </SelectItem>
-                        <SelectItem value="closed" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                        <SelectItem value="closed" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           Closed
                         </SelectItem>
-                        <SelectItem value="denied" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                        <SelectItem value="denied" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           Denied
                         </SelectItem>
                       </SelectContent>
@@ -247,15 +250,25 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     
                     {/* Lender Filter */}
                     <Select value={lenderFilter} onValueChange={setLenderFilter}>
-                      <SelectTrigger className="w-full lg:w-48 bg-background">
+                      <SelectTrigger className="w-full lg:w-48 bg-background border-border rounded-lg">
                         <SelectValue placeholder="All Lenders" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all-lenders">All Lenders</SelectItem>
-                        <SelectItem value="first-national">First National Bank</SelectItem>
-                        <SelectItem value="community-credit">Community Credit Union</SelectItem>
-                        <SelectItem value="metro-mortgage">Metro Mortgage Solutions</SelectItem>
-                        <SelectItem value="builders-bank">Builder's Bank</SelectItem>
+                      <SelectContent className="w-[var(--radix-select-trigger-width)] p-0 border-border rounded-xl shadow-lg bg-popover">
+                        <SelectItem value="all-lenders" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                          All Lenders
+                        </SelectItem>
+                        <SelectItem value="first-national-bank" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                          First National Bank
+                        </SelectItem>
+                        <SelectItem value="community-credit-union" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                          Community Credit Union
+                        </SelectItem>
+                        <SelectItem value="metro-mortgage-solutions" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                          Metro Mortgage Solutions
+                        </SelectItem>
+                        <SelectItem value="builders-bank" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                          Builder's Bank
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
