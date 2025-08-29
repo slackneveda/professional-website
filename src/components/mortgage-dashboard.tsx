@@ -27,7 +27,10 @@ import {
   DownloadSimple,
   MagnifyingGlass,
   Eye,
-  X
+  X,
+  Star,
+  CaretLeft,
+  CaretRight
 } from "@phosphor-icons/react"
 
 export function MortgageDashboard() {
@@ -39,6 +42,7 @@ export function MortgageDashboard() {
   const [lenderFilter, setLenderFilter] = useState("all-lenders")
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false)
   const [selectedDeal, setSelectedDeal] = useState<any>(null)
+  const [lenderSearchTerm, setLenderSearchTerm] = useState("")
 
   // Sample deals data
   const dealsData = [
@@ -134,6 +138,65 @@ export function MortgageDashboard() {
     }
   ]
 
+  // Sample lenders data
+  const lendersData = [
+    {
+      id: "L001",
+      name: "First National Bank",
+      specialties: ["Commercial Real Estate", "SBA Loans"],
+      averageRating: 4.5,
+      averageRatingCount: 23,
+      myRating: 5.0,
+      timesUsed: 15,
+      baseRate: "6.25%",
+      lastUsed: "12/8/2024"
+    },
+    {
+      id: "L002", 
+      name: "Community Credit Union",
+      specialties: ["First-Time Homebuyers", "Small Business"],
+      averageRating: 4.8,
+      averageRatingCount: 31,
+      myRating: 4.0,
+      timesUsed: 22,
+      baseRate: "5.95%",
+      lastUsed: "12/10/2024"
+    },
+    {
+      id: "L003",
+      name: "Metro Mortgage Solutions", 
+      specialties: ["Investment Properties", "Jumbo Loans"],
+      averageRating: 4.2,
+      averageRatingCount: 18,
+      myRating: 4.0,
+      timesUsed: 8,
+      baseRate: "6.50%",
+      lastUsed: "11/25/2024"
+    },
+    {
+      id: "L004",
+      name: "Builder's Bank",
+      specialties: ["Construction Loans", "Developer Financing"],
+      averageRating: 3.9,
+      averageRatingCount: 12,
+      myRating: 3.0,
+      timesUsed: 5,
+      baseRate: "7.00%",
+      lastUsed: "12/5/2024"
+    },
+    {
+      id: "L005",
+      name: "Regional Trust Bank",
+      specialties: ["Private Banking", "High Net Worth"],
+      averageRating: 4.6,
+      averageRatingCount: 27,
+      myRating: 5.0,
+      timesUsed: 18,
+      baseRate: "6.15%",
+      lastUsed: "12/7/2024"
+    }
+  ]
+
   // Filter deals based on search term, status, and lender
   const filteredDeals = dealsData.filter((deal) => {
     const matchesSearch = deal.borrower.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -161,6 +224,37 @@ export function MortgageDashboard() {
       default:
         return <Badge variant="secondary">{status}</Badge>
     }
+  }
+
+  // Filter lenders based on search term
+  const filteredLenders = lendersData.filter((lender) => {
+    const matchesSearch = lender.name.toLowerCase().includes(lenderSearchTerm.toLowerCase()) ||
+                         lender.specialties.some(specialty => 
+                           specialty.toLowerCase().includes(lenderSearchTerm.toLowerCase())
+                         )
+    return matchesSearch
+  })
+
+  // Star rating component
+  const StarRating = ({ rating, maxRating = 5, count }: { rating: number; maxRating?: number; count?: number }) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[...Array(maxRating)].map((_, index) => (
+          <Star
+            key={index}
+            className={`h-4 w-4 ${
+              index < Math.floor(rating)
+                ? "fill-yellow-400 text-yellow-400"
+                : index < rating
+                ? "fill-yellow-400/50 text-yellow-400"
+                : "fill-gray-200 text-gray-200 dark:fill-gray-600 dark:text-gray-600"
+            }`}
+          />
+        ))}
+        <span className="text-sm font-medium ml-1">{rating}</span>
+        {count && <span className="text-sm text-muted-foreground ml-1">({count})</span>}
+      </div>
+    )
   }
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -423,10 +517,138 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       case "lenders":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">Lender Network</h2>
-            <Card>
+            {/* Header Section */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold">Lender Management</h2>
+                <p className="text-muted-foreground mt-1 text-sm sm:text-base">View ratings, usage stats, and manage lender relationships</p>
+              </div>
+              {/* Search Input */}
+              <div className="relative w-full sm:w-80">
+                <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search lenders or specialties..."
+                  value={lenderSearchTerm}
+                  onChange={(e) => setLenderSearchTerm(e.target.value)}
+                  className="pl-10 bg-background"
+                />
+              </div>
+            </div>
+
+            {/* Lenders Table Section */}
+            <Card className="bg-muted/30">
               <CardContent className="p-6">
-                <p className="text-muted-foreground">Lender management interface will be implemented here.</p>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">Lender Directory ({filteredLenders.length})</h3>
+                    <p className="text-muted-foreground text-sm">Click on a lender to view detailed profile and rate history</p>
+                  </div>
+                  
+                  {/* Desktop Table */}
+                  <div className="hidden lg:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Lender Name</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Average Rating</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">My Rating</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Times Used</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Base Rate</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Last Used</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredLenders.map((lender) => (
+                          <tr key={lender.id} className="border-b hover:bg-background/50 transition-colors">
+                            <td className="py-4 px-4">
+                              <div>
+                                <div className="font-medium text-foreground">{lender.name}</div>
+                                <div className="text-sm text-muted-foreground">{lender.specialties.join(", ")}</div>
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <StarRating rating={lender.averageRating} count={lender.averageRatingCount} />
+                            </td>
+                            <td className="py-4 px-4">
+                              <StarRating rating={lender.myRating} />
+                            </td>
+                            <td className="py-4 px-4 font-medium">{lender.timesUsed}</td>
+                            <td className="py-4 px-4 font-medium">{lender.baseRate}</td>
+                            <td className="py-4 px-4">{lender.lastUsed}</td>
+                            <td className="py-4 px-4">
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="text-muted-foreground hover:text-foreground"
+                              >
+                                <Eye className="h-4 w-4 mr-2" />
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="lg:hidden space-y-4">
+                    {filteredLenders.map((lender) => (
+                      <Card key={lender.id} className="p-4 bg-background">
+                        <div className="space-y-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="font-medium text-foreground">{lender.name}</div>
+                              <div className="text-sm text-muted-foreground">{lender.specialties.join(", ")}</div>
+                            </div>
+                            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                              <Eye className="h-4 w-4 mr-1" />
+                              View
+                            </Button>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <div className="text-muted-foreground">Average Rating</div>
+                              <StarRating rating={lender.averageRating} count={lender.averageRatingCount} />
+                            </div>
+                            <div>
+                              <div className="text-muted-foreground">My Rating</div>
+                              <StarRating rating={lender.myRating} />
+                            </div>
+                            <div>
+                              <div className="text-muted-foreground">Times Used</div>
+                              <div className="font-medium">{lender.timesUsed}</div>
+                            </div>
+                            <div>
+                              <div className="text-muted-foreground">Base Rate</div>
+                              <div className="font-medium">{lender.baseRate}</div>
+                            </div>
+                          </div>
+                          <div className="text-sm">
+                            <div className="text-muted-foreground">Last Used</div>
+                            <div>{lender.lastUsed}</div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="flex items-center justify-center pt-4">
+                    <div className="flex items-center space-x-2">
+                      <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                        <CaretLeft className="h-4 w-4" />
+                      </Button>
+                      <div className="h-2 flex-1 bg-muted rounded-full mx-4">
+                        <div className="h-full bg-primary rounded-full" style={{ width: "100%" }}></div>
+                      </div>
+                      <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                        <CaretRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
