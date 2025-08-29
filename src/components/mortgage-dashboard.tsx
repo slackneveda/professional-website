@@ -227,22 +227,22 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                         <SelectValue placeholder="All Statuses" />
                       </SelectTrigger>
                       <SelectContent className="w-[var(--radix-select-trigger-width)] p-0 border-border rounded-xl shadow-lg bg-popover">
-                        <SelectItem value="all-statuses" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="all-statuses" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-muted focus:bg-muted rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
                           All Statuses
                         </SelectItem>
-                        <SelectItem value="submitted" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="submitted" className="px-4 py-3 text-sm transition-colors duration-200 cursor-pointer rounded-lg mx-1 my-0.5 bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 focus:bg-gray-200 dark:focus:bg-gray-600">
                           Submitted
                         </SelectItem>
-                        <SelectItem value="underwriting" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="underwriting" className="px-4 py-3 text-sm transition-colors duration-200 cursor-pointer rounded-lg mx-1 my-0.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-200 dark:hover:bg-yellow-900/50 focus:bg-yellow-200 dark:focus:bg-yellow-900/50">
                           Underwriting
                         </SelectItem>
-                        <SelectItem value="approved" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="approved" className="px-4 py-3 text-sm transition-colors duration-200 cursor-pointer rounded-lg mx-1 my-0.5 bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-200 dark:hover:bg-blue-900/50 focus:bg-blue-200 dark:focus:bg-blue-900/50">
                           Approved
                         </SelectItem>
-                        <SelectItem value="closed" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="closed" className="px-4 py-3 text-sm transition-colors duration-200 cursor-pointer rounded-lg mx-1 my-0.5 bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-200 dark:hover:bg-green-900/50 focus:bg-green-200 dark:focus:bg-green-900/50">
                           Closed
                         </SelectItem>
-                        <SelectItem value="denied" className="px-4 py-3 text-sm text-foreground hover:bg-orange-100 dark:hover:bg-orange-900/50 focus:bg-orange-100 dark:focus:bg-orange-900/50 rounded-lg mx-1 my-0.5 transition-colors duration-200 cursor-pointer">
+                        <SelectItem value="denied" className="px-4 py-3 text-sm transition-colors duration-200 cursor-pointer rounded-lg mx-1 my-0.5 bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-200 dark:hover:bg-red-900/50 focus:bg-red-200 dark:focus:bg-red-900/50">
                           Denied
                         </SelectItem>
                       </SelectContent>
