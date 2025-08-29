@@ -22,7 +22,6 @@ import {
   Gear,
   Upload,
   User,
-  X,
   Warning,
   DownloadSimple
 } from "@phosphor-icons/react"
@@ -215,27 +214,29 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     <span className="xs:hidden">Import</span>
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:max-w-4xl">
+                <DialogContent className="w-[95vw] max-w-2xl max-h-[85vh] overflow-y-auto sm:w-[90vw] md:w-[80vw] lg:max-w-2xl">
                   <DialogHeader className="pb-4 border-b">
-                    <DialogTitle className="text-xl sm:text-2xl font-semibold">Import CRM Data</DialogTitle>
-                    <p className="text-sm sm:text-base text-muted-foreground mt-2">
+                    <DialogTitle className="text-xl font-semibold">Import CRM Data</DialogTitle>
+                    <p className="text-sm text-muted-foreground mt-1">
                       Upload a CSV file from your CRM platform to update dashboard data
                     </p>
                   </DialogHeader>
                   
-                  <div className="space-y-6 pt-6">
-                    <Alert className="bg-orange-50 border-orange-200 dark:bg-orange-950 dark:border-orange-800">
-                      <Warning className="h-4 w-4 text-orange-600 dark:text-orange-400 shrink-0 mt-0.5" />
-                      <AlertDescription className="text-orange-800 dark:text-orange-200 text-sm">
+                  <div className="space-y-6 pt-4">
+                    {/* Warning Alert */}
+                    <Alert className="bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-800/50">
+                      <Warning className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                      <AlertDescription className="text-amber-800 dark:text-amber-200 text-sm">
                         This functionality demonstrates CSV import from your CRM. Try downloading the sample file and importing it to see how new deals are added.
                       </AlertDescription>
                     </Alert>
 
-                    <div className="space-y-4">
-                      <h3 className="text-base sm:text-lg font-medium">CSV File Upload</h3>
+                    {/* CSV File Upload Section */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium">CSV File</h3>
                       
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                        <div className="flex-1 w-full flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 border rounded-lg bg-muted/30">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 flex items-center gap-3 p-3 border rounded-lg bg-muted/30">
                           <input
                             id="csv-file-input"
                             type="file"
@@ -245,113 +246,67 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                           />
                           <Button
                             onClick={() => document.getElementById('csv-file-input')?.click()}
-                            className="shrink-0 w-full sm:w-auto"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
                             size="sm"
                           >
-                            <Upload className="h-4 w-4 mr-2" />
                             Choose File
                           </Button>
-                          <span className="text-sm text-muted-foreground break-all">
+                          <span className="text-sm text-muted-foreground flex-1 min-w-0">
                             {selectedFile ? selectedFile.name : 'No file chosen'}
                           </span>
                         </div>
-                        <Button variant="outline" size="icon" className="shrink-0">
+                        <Button variant="outline" size="icon" className="p-2">
                           <Upload className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-                      <div className="lg:col-span-2">
-                        <Alert className="bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800 h-full">
-                          <Warning className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-                          <div className="space-y-3">
-                            <div className="font-medium text-blue-800 dark:text-blue-200 text-sm sm:text-base">
-                              Required CSV Format
-                            </div>
-                            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300">
-                              Your CSV file should include the following columns:
-                            </div>
-                            <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-md">
-                              <code className="block text-xs font-mono text-blue-900 dark:text-blue-100 break-all">
-                                Client_Name, Amount, Status, Date, Type, Assigned_To
-                              </code>
-                            </div>
-                            <div className="text-xs text-blue-600 dark:text-blue-400 space-y-2">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                <div>
-                                  <span className="font-medium">Status:</span> "Closed" or "Pending"
-                                </div>
-                                <div>
-                                  <span className="font-medium">Amount:</span> Numeric values
-                                </div>
-                                <div>
-                                  <span className="font-medium">Date:</span> YYYY-MM-DD format
-                                </div>
-                                <div>
-                                  <span className="font-medium">Assigned_To:</span> Optional field
-                                </div>
-                              </div>
-                              <p className="text-xs">
-                                Dollar signs will be removed automatically. Assigned To defaults to "John" if not provided.
-                              </p>
-                            </div>
-                          </div>
-                        </Alert>
+                    {/* Required CSV Format Section */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Warning className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm font-medium">Required CSV Format</span>
+                        </div>
+                        <Button 
+                          variant="outline" 
+                          onClick={downloadSampleFile}
+                          size="sm"
+                          className="text-xs"
+                        >
+                          Download Sample
+                        </Button>
                       </div>
-
-                      <div className="flex flex-col justify-center space-y-4">
-                        <div className="text-center">
-                          <h4 className="text-sm font-medium mb-2">Sample File</h4>
-                          <Button 
-                            variant="outline" 
-                            onClick={downloadSampleFile}
-                            className="w-full"
-                            size="sm"
-                          >
-                            <DownloadSimple className="h-4 w-4 mr-2" />
-                            Download Sample
-                          </Button>
-                        </div>
-                        
-                        <div className="text-center pt-2 border-t">
-                          <div className="text-xs text-muted-foreground mb-2">
-                            File Requirements
-                          </div>
-                          <div className="space-y-1 text-xs">
-                            <div className="flex justify-between">
-                              <span>Format:</span>
-                              <Badge variant="secondary" className="text-xs">CSV</Badge>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Max Size:</span>
-                              <span className="text-muted-foreground">10MB</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Encoding:</span>
-                              <span className="text-muted-foreground">UTF-8</span>
-                            </div>
-                          </div>
-                        </div>
+                      
+                      <div className="text-sm text-muted-foreground">
+                        Your CSV file should include the following columns:
+                      </div>
+                      
+                      <div className="bg-muted/50 p-4 rounded-lg border">
+                        <code className="text-sm font-mono text-foreground block break-all">
+                          Client_Name, Amount, Status, Date, Type, Assigned_To
+                        </code>
+                      </div>
+                      
+                      <div className="text-sm text-muted-foreground space-y-1">
+                        <p>Status should be "Closed" or "Pending". Amount should be numeric (dollar signs will be removed automatically). Assigned To is optional and will default to "John" if not provided.</p>
                       </div>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-6 border-t">
+                    {/* Action Buttons */}
+                    <div className="flex justify-between items-center pt-4 border-t">
                       <Button 
-                        variant="outline" 
+                        variant="ghost" 
                         onClick={handleClear}
                         disabled={!selectedFile}
-                        className="w-full sm:w-auto order-2 sm:order-1"
                         size="sm"
                       >
-                        <X className="h-4 w-4 mr-2" />
                         Clear
                       </Button>
-                      <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto order-1 sm:order-2">
+                      <div className="flex gap-3">
                         <Button 
                           variant="outline" 
                           onClick={() => setIsImportDialogOpen(false)}
-                          className="w-full sm:w-auto"
                           size="sm"
                         >
                           Cancel
@@ -359,7 +314,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                         <Button 
                           onClick={handleImportData}
                           disabled={!selectedFile}
-                          className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
                           size="sm"
                         >
                           <Upload className="h-4 w-4 mr-2" />
