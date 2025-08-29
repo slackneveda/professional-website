@@ -74,8 +74,26 @@ export function MortgageDashboard() {
       status: "Submitted",
       closeDate: "2/1/2025",
       rate: "8%"
+    },
+    {
+      id: "D005",
+      borrower: "Wilson Holdings",
+      loanAmount: "$320,000", 
+      lender: "First National Bank",
+      status: "Denied",
+      closeDate: "N/A",
+      rate: "N/A"
     }
   ]
+
+  // Filter deals based on search term and status
+  const filteredDeals = dealsData.filter((deal) => {
+    const matchesSearch = deal.borrower.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         deal.id.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesStatus = statusFilter === "all-statuses" || 
+                         deal.status.toLowerCase() === statusFilter.toLowerCase()
+    return matchesSearch && matchesStatus
+  })
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -87,6 +105,8 @@ export function MortgageDashboard() {
         return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-300">{status}</Badge>
       case "Submitted":
         return <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100 dark:bg-gray-900/20 dark:text-gray-300">{status}</Badge>
+      case "Denied":
+        return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300">{status}</Badge>
       default:
         return <Badge variant="secondary">{status}</Badge>
     }
@@ -115,6 +135,15 @@ export function MortgageDashboard() {
       fileInput.value = ''
     }
   }
+
+  // Filter deals based on search term and status
+  const filteredDeals = dealsData.filter((deal) => {
+    const matchesSearch = deal.borrower.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         deal.id.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesStatus = statusFilter === "all-statuses" || 
+                         deal.status.toLowerCase() === statusFilter.toLowerCase()
+    return matchesSearch && matchesStatus
+  })
 
   const downloadSampleFile = () => {
     const sampleData = `Client_Name,Amount,Status,Date,Type,Assigned_To
@@ -200,15 +229,28 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                     
                     {/* Status Filter */}
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
-                      <SelectTrigger className="w-full lg:w-48 bg-background">
+                      <SelectTrigger className="w-full lg:w-48 bg-background border-border rounded-lg">
                         <SelectValue placeholder="All Statuses" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all-statuses">All Statuses</SelectItem>
-                        <SelectItem value="underwriting">Underwriting</SelectItem>
-                        <SelectItem value="approved">Approved</SelectItem>
-                        <SelectItem value="closed">Closed</SelectItem>
-                        <SelectItem value="submitted">Submitted</SelectItem>
+                      <SelectContent className="w-[var(--radix-select-trigger-width)] p-0 border-border rounded-lg shadow-lg">
+                        <SelectItem value="all-statuses" className="px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          All Statuses
+                        </SelectItem>
+                        <SelectItem value="submitted" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          Submitted
+                        </SelectItem>
+                        <SelectItem value="underwriting" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          Underwriting
+                        </SelectItem>
+                        <SelectItem value="approved" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          Approved
+                        </SelectItem>
+                        <SelectItem value="closed" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          Closed
+                        </SelectItem>
+                        <SelectItem value="denied" className="px-4 py-3 text-sm text-foreground hover:bg-muted/50 focus:bg-muted/50">
+                          Denied
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     
@@ -234,7 +276,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
             <Card>
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Deals (4)</h3>
+                  <h3 className="text-lg font-semibold">Deals ({filteredDeals.length})</h3>
                   
                   {/* Desktop Table */}
                   <div className="hidden lg:block overflow-x-auto">
@@ -252,7 +294,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
                         </tr>
                       </thead>
                       <tbody>
-                        {dealsData.map((deal) => (
+                        {filteredDeals.map((deal) => (
                           <tr key={deal.id} className="border-b hover:bg-muted/30 transition-colors">
                             <td className="py-4 px-4 font-medium">{deal.id}</td>
                             <td className="py-4 px-4">{deal.borrower}</td>
@@ -275,7 +317,7 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
 
                   {/* Mobile Cards */}
                   <div className="lg:hidden space-y-4">
-                    {dealsData.map((deal) => (
+                    {filteredDeals.map((deal) => (
                       <Card key={deal.id} className="p-4">
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
