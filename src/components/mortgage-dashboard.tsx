@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Input } from "@/components/ui/input"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { DashboardCharts } from "@/components/dashboard-charts"
@@ -23,13 +24,73 @@ import {
   Upload,
   User,
   Warning,
-  DownloadSimple
+  DownloadSimple,
+  MagnifyingGlass,
+  Eye
 } from "@phosphor-icons/react"
 
 export function MortgageDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard")
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [statusFilter, setStatusFilter] = useState("all-statuses")
+  const [lenderFilter, setLenderFilter] = useState("all-lenders")
+
+  // Sample deals data
+  const dealsData = [
+    {
+      id: "D001",
+      borrower: "Johnson Family",
+      loanAmount: "$450,000",
+      lender: "First National Bank", 
+      status: "Underwriting",
+      closeDate: "1/15/2025",
+      rate: "6.75%"
+    },
+    {
+      id: "D002", 
+      borrower: "Miller Corporation",
+      loanAmount: "$850,000",
+      lender: "Community Credit Union",
+      status: "Approved",
+      closeDate: "12/20/2024", 
+      rate: "7.25%"
+    },
+    {
+      id: "D003",
+      borrower: "Smith Family Trust", 
+      loanAmount: "$680,000",
+      lender: "Metro Mortgage Solutions",
+      status: "Closed",
+      closeDate: "11/30/2024",
+      rate: "6.5%"
+    },
+    {
+      id: "D004",
+      borrower: "Construction Plus LLC",
+      loanAmount: "$1,200,000", 
+      lender: "Builder's Bank",
+      status: "Submitted",
+      closeDate: "2/1/2025",
+      rate: "8%"
+    }
+  ]
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "Underwriting":
+        return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-300">{status}</Badge>
+      case "Approved":
+        return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-300">{status}</Badge>
+      case "Closed":
+        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-300">{status}</Badge>
+      case "Submitted":
+        return <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100 dark:bg-gray-900/20 dark:text-gray-300">{status}</Badge>
+      default:
+        return <Badge variant="secondary">{status}</Badge>
+    }
+  }
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -115,10 +176,137 @@ Bob Johnson,275000,Pending,2024-01-12,Purchase,John Smith`
       case "deals":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">Deal Management</h2>
+            {/* Header Section */}
+            <Card className="bg-muted/30">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="text-2xl font-semibold text-foreground">Deal Management</h2>
+                    <p className="text-muted-foreground mt-1">Search and filter your mortgage deals</p>
+                  </div>
+                  
+                  {/* Search and Filter Row */}
+                  <div className="flex flex-col lg:flex-row gap-4">
+                    {/* Search Input */}
+                    <div className="flex-1 relative">
+                      <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Search by borrower name or deal ID..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10 bg-background"
+                      />
+                    </div>
+                    
+                    {/* Status Filter */}
+                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                      <SelectTrigger className="w-full lg:w-48 bg-background">
+                        <SelectValue placeholder="All Statuses" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all-statuses">All Statuses</SelectItem>
+                        <SelectItem value="underwriting">Underwriting</SelectItem>
+                        <SelectItem value="approved">Approved</SelectItem>
+                        <SelectItem value="closed">Closed</SelectItem>
+                        <SelectItem value="submitted">Submitted</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    
+                    {/* Lender Filter */}
+                    <Select value={lenderFilter} onValueChange={setLenderFilter}>
+                      <SelectTrigger className="w-full lg:w-48 bg-background">
+                        <SelectValue placeholder="All Lenders" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all-lenders">All Lenders</SelectItem>
+                        <SelectItem value="first-national">First National Bank</SelectItem>
+                        <SelectItem value="community-credit">Community Credit Union</SelectItem>
+                        <SelectItem value="metro-mortgage">Metro Mortgage Solutions</SelectItem>
+                        <SelectItem value="builders-bank">Builder's Bank</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Deals Table Section */}
             <Card>
               <CardContent className="p-6">
-                <p className="text-muted-foreground">Deal management interface will be implemented here.</p>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Deals (4)</h3>
+                  
+                  {/* Desktop Table */}
+                  <div className="hidden lg:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Deal ID</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Borrower</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Loan Amount</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Lender</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Close Date</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Rate</th>
+                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dealsData.map((deal) => (
+                          <tr key={deal.id} className="border-b hover:bg-muted/30 transition-colors">
+                            <td className="py-4 px-4 font-medium">{deal.id}</td>
+                            <td className="py-4 px-4">{deal.borrower}</td>
+                            <td className="py-4 px-4 font-medium">{deal.loanAmount}</td>
+                            <td className="py-4 px-4">{deal.lender}</td>
+                            <td className="py-4 px-4">{getStatusBadge(deal.status)}</td>
+                            <td className="py-4 px-4">{deal.closeDate}</td>
+                            <td className="py-4 px-4 font-medium">{deal.rate}</td>
+                            <td className="py-4 px-4">
+                              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                                <Eye className="h-4 w-4 mr-2" />
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="lg:hidden space-y-4">
+                    {dealsData.map((deal) => (
+                      <Card key={deal.id} className="p-4">
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{deal.id}</span>
+                            {getStatusBadge(deal.status)}
+                          </div>
+                          <div>
+                            <div className="font-medium">{deal.borrower}</div>
+                            <div className="text-sm text-muted-foreground">{deal.lender}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-sm">
+                            <div>
+                              <div className="font-medium">{deal.loanAmount}</div>
+                              <div className="text-muted-foreground">{deal.rate}</div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-muted-foreground">Close Date</div>
+                              <div>{deal.closeDate}</div>
+                            </div>
+                          </div>
+                          <div className="pt-2 border-t">
+                            <Button variant="outline" size="sm" className="w-full">
+                              <Eye className="h-4 w-4 mr-2" />
+                              View Deal
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
