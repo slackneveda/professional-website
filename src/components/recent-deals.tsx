@@ -49,13 +49,13 @@ const getStatusVariant = (status: Deal["status"]) => {
 const getStatusColor = (status: Deal["status"]) => {
   switch (status) {
     case "approved":
-      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+      return "bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-200"
     case "underwriting":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+      return "bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-200"
     case "submitted":
-      return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+      return "bg-orange-100 text-orange-900 dark:bg-orange-900 dark:text-orange-200"
     default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+      return "bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-200"
   }
 }
 
